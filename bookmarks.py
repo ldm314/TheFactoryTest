@@ -80,6 +80,10 @@ class Handler(BaseHTTPRequestHandler):
                 if not self._caller():
                     return self._send(401, {"error": "an owner is required"})
                 return self.fetch(self._path_id())
+            if method == "DELETE" and self.path.startswith('/bookmarks/'):
+                if not self._caller():
+                    return self._send(401, {"error": "an owner is required"})
+                return self.remove(self._path_id())
             self._send(404, {"error": "not found"})
         except Exception as error:  # noqa: BLE001
             self._send(500, {"error": str(error)})
@@ -115,6 +119,29 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(403, {"error": "forbidden"})
 
         return self._send(200, record)
+
+
+    def remove(self, record_id):
+        """Delete the record and answer 204 with an empty body, and 403 when the caller is not the record's owner.
+
+        404 when there is no such record. `store.delete(record_id)` returns
+        False when there was nothing to delete, which is how you tell the two
+        apart without reading it first.
+        """
+        record = store.get(record_id)
+        if record is None:
+            return self._send(404, {"error": "not found"})
+
+        owner = store.owner_of(record_id)
+        caller = self._caller()
+        if owner != caller:
+            return self._send(403, {"error": "forbidden"})
+
+        deleted = store.delete(record_id)
+        if not deleted:
+            return self._send(404, {"error": "not found"})
+
+        return self._send(204)
 
 
 def serve(port):
