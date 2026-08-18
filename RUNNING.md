@@ -26,7 +26,7 @@ them and reports which flags are on.
 
 - `bookmarks.py` serves `/bookmarks` — the system shall list every bookmark for the owner
 - `owners.py` serves `/owners` — the system shall Store a bookmark with its url and return it to its owner by id
-- `reminders.py` serves `/reminders` — the system shall delete a reminder by id
+- `reminders.py` serves `/reminders` — the system shall list every reminder for the owner
 
 ## Flags
 
@@ -40,3 +40,4 @@ Currently on:
 
 - `flag.r_1002`
 - `flag.r_1027`
+- `flag.r_1028`

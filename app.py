@@ -25,7 +25,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 COMPONENTS = [
     {"service": 'bookmarks', "base_path": '/bookmarks', "handler": bookmarks.Handler, "routes": [('POST', '^/bookmarks/?$', ''), ('GET', '^/bookmarks/[^/]+/?$', ''), ('DELETE', '^/bookmarks/[^/]+/?$', ''), ('GET', '^/bookmarks/?$', 'flag.r_1027')]},
     {"service": 'owners', "base_path": '/owners', "handler": owners.Handler, "routes": [('POST', '^/owners/?$', ''), ('GET', '^/owners/[^/]+/?$', '')]},
-    {"service": 'reminders', "base_path": '/reminders', "handler": reminders.Handler, "routes": [('POST', '^/reminders/?$', ''), ('GET', '^/reminders/[^/]+/?$', ''), ('DELETE', '^/reminders/[^/]+/?$', 'flag.r_1028')]},
+    {"service": 'reminders', "base_path": '/reminders', "handler": reminders.Handler, "routes": [('POST', '^/reminders/?$', ''), ('GET', '^/reminders/[^/]+/?$', ''), ('DELETE', '^/reminders/[^/]+/?$', 'flag.r_1028'), ('GET', '^/reminders/?$', 'flag.r_1029')]},
 ]
 
 
