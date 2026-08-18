@@ -11,6 +11,8 @@ docker compose up --build
 curl localhost:8080/health
 ```
 
+Something already on 8080? `APP_PORT=9000 docker compose up --build`.
+
 ## Without
 
 ```
@@ -23,11 +25,8 @@ them and reports which flags are on.
 ## Components
 
 - `bookmarks.py` serves `/bookmarks` — the system shall list every bookmark for the owner
-- `comments.py` serves `/comments` — the system shall store a comment and return it by id
-- `memos.py` serves `/memos` — the system shall store a memo and return it by id
-- `notes.py` serves `/notes` — the system shall store a note and return it by id
 - `owners.py` serves `/owners` — the system shall Store a bookmark with its url and return it to its owner by id
-- `reminders.py` serves `/reminders` — the system shall store a reminder and return it by id
+- `reminders.py` serves `/reminders` — the system shall delete a reminder by id
 
 ## Flags
 
@@ -40,3 +39,4 @@ per promotion, carrying the work item that caused it.
 Currently on:
 
 - `flag.r_1002`
+- `flag.r_1027`

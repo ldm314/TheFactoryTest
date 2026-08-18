@@ -24,7 +24,12 @@ services:
       DATABASE_URL: postgresql://app:app@database:5432/app
       PORT: "8080"
     ports:
-      - "8080:8080"
+      # The host port is overridable, because a generated application that
+      # hardcodes one collides with whatever the operator is already running.
+      # Measured: `docker compose up` on a machine with something on 8080
+      # failed with "port is already allocated" and the application never
+      # started. `APP_PORT=9000 docker compose up` works.
+      - "${APP_PORT:-8080}:8080"
     depends_on:
       database:
         condition: service_healthy
