@@ -13,9 +13,6 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import flags
 import bookmarks
-import comments
-import memos
-import notes
 import owners
 import reminders
 
@@ -27,11 +24,8 @@ PORT = int(os.environ.get("PORT", "8080"))
 # operations it serves. A route whose flag is not on does not exist yet.
 COMPONENTS = [
     {"service": 'bookmarks', "base_path": '/bookmarks', "handler": bookmarks.Handler, "routes": [('POST', '^/bookmarks/?$', ''), ('GET', '^/bookmarks/[^/]+/?$', ''), ('DELETE', '^/bookmarks/[^/]+/?$', ''), ('GET', '^/bookmarks/?$', 'flag.r_1027')]},
-    {"service": 'comments', "base_path": '/comments', "handler": comments.Handler, "routes": [('POST', '^/comments/?$', ''), ('GET', '^/comments/[^/]+/?$', '')]},
-    {"service": 'memos', "base_path": '/memos', "handler": memos.Handler, "routes": [('POST', '^/memos/?$', ''), ('GET', '^/memos/[^/]+/?$', '')]},
-    {"service": 'notes', "base_path": '/notes', "handler": notes.Handler, "routes": [('POST', '^/notes/?$', ''), ('GET', '^/notes/[^/]+/?$', '')]},
     {"service": 'owners', "base_path": '/owners', "handler": owners.Handler, "routes": [('POST', '^/owners/?$', ''), ('GET', '^/owners/[^/]+/?$', '')]},
-    {"service": 'reminders', "base_path": '/reminders', "handler": reminders.Handler, "routes": [('POST', '^/reminders/?$', ''), ('GET', '^/reminders/[^/]+/?$', '')]},
+    {"service": 'reminders', "base_path": '/reminders', "handler": reminders.Handler, "routes": [('POST', '^/reminders/?$', ''), ('GET', '^/reminders/[^/]+/?$', ''), ('DELETE', '^/reminders/[^/]+/?$', 'flag.r_1028')]},
 ]
 
 
