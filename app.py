@@ -15,6 +15,7 @@ import flags
 import bookmarks
 import owners
 import reminders
+import tags
 
 SERVICE_NAME = 'Factory Test'
 SERVICE_VERSION = "1.0.0"
@@ -26,6 +27,7 @@ COMPONENTS = [
     {"service": 'bookmarks', "base_path": '/bookmarks', "handler": bookmarks.Handler, "routes": [('POST', '^/bookmarks/?$', ''), ('GET', '^/bookmarks/[^/]+/?$', ''), ('DELETE', '^/bookmarks/[^/]+/?$', ''), ('GET', '^/bookmarks/?$', 'flag.r_1027')]},
     {"service": 'owners', "base_path": '/owners', "handler": owners.Handler, "routes": [('POST', '^/owners/?$', ''), ('GET', '^/owners/[^/]+/?$', '')]},
     {"service": 'reminders', "base_path": '/reminders', "handler": reminders.Handler, "routes": [('POST', '^/reminders/?$', ''), ('GET', '^/reminders/[^/]+/?$', ''), ('DELETE', '^/reminders/[^/]+/?$', 'flag.r_1028'), ('GET', '^/reminders/?$', 'flag.r_1029')]},
+    {"service": 'tags', "base_path": '/tags', "handler": tags.Handler, "routes": [('POST', '^/tags/?$', 'flag.r_1030'), ('GET', '^/tags/[^/]+/?$', 'flag.r_1030')]},
 ]
 
 

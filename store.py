@@ -92,7 +92,12 @@ class Store:
         each other over it.
         """
         stored = dict(record)
-        stored.setdefault("id", self.next_id())
+        # Not `setdefault`: it evaluates its default eagerly, so a record that
+        # already had an id still called next_id() — a wasted `nextval` round
+        # trip on every single write, and a sequence full of gaps. Found by
+        # watching a running application hand out ids 1 and 3.
+        if not stored.get("id"):
+            stored["id"] = self.next_id()
         stored["id"] = str(stored["id"])
         stored["owner"] = str(owner or "")
         with self._lock, self._connection.cursor() as cursor:
