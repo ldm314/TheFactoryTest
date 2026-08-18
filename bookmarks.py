@@ -84,6 +84,10 @@ class Handler(BaseHTTPRequestHandler):
                 if not self._caller():
                     return self._send(401, {"error": "an owner is required"})
                 return self.remove(self._path_id())
+            if method == "GET" and self.path.rstrip("/") == '/bookmarks':
+                if not self._caller():
+                    return self._send(401, {"error": "an owner is required"})
+                return self.list_records()
             self._send(404, {"error": "not found"})
         except Exception as error:  # noqa: BLE001
             self._send(500, {"error": str(error)})
@@ -142,6 +146,20 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(404, {"error": "not found"})
 
         return self._send(204)
+
+
+    def list_records(self):
+        """Answer 200 with a JSON array of this caller's records.
+
+        `store.list(owner)` returns them. An owner with nothing stored gets an
+        empty array and a 200, never a 404 — "you have none" is an answer.
+        """
+        caller = self._caller()
+        if not caller:
+            return self._send(401, {"error": "an owner is required"})
+
+        records = store.list(caller)
+        return self._send(200, records)
 
 
 def serve(port):
