@@ -15,7 +15,7 @@ SERVICE_VERSION = "1.0.0"
 RETENTION_DAYS = 30
 # Columns derived from what the requirements named (docs/11 §4). The record is
 # stored whole either way; these let the database be queried through them.
-RECORD_FIELDS = ['url', 'title']
+RECORD_FIELDS = ['url', 'title', 'description']
 OWNER_HEADER = 'X-Owner'
 
 # Where this component's records live. Provided by the scaffold: put a record
