@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS "svc_bookmarks".records (
     "body" jsonb NOT NULL,
     "created_at" timestamptz NOT NULL DEFAULT now(),
     "url" text,
-    "title" text
+    "title" text,
+    "description" text
 );
 
 CREATE INDEX IF NOT EXISTS records_owner_idx
