@@ -12,6 +12,7 @@ import re
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import flags
+import bookmarks
 import notes
 
 SERVICE_NAME = 'Factory Test'
@@ -21,6 +22,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 # One entry per component: its base path, its request handler, and the
 # operations it serves. A route whose flag is not on does not exist yet.
 COMPONENTS = [
+    {"service": 'bookmarks', "base_path": '/bookmarks', "handler": bookmarks.Handler, "routes": [('POST', '^/bookmarks/?$', 'flag.r_1033'), ('GET', '^/bookmarks/[^/]+/?$', 'flag.r_1033')]},
     {"service": 'notes', "base_path": '/notes', "handler": notes.Handler, "routes": [('POST', '^/notes/?$', 'flag.r_1031'), ('GET', '^/notes/[^/]+/?$', 'flag.r_1031')]},
 ]
 

@@ -105,13 +105,18 @@ class Store:
 
     durable = True
 
-    def __init__(self, service, retention_days=None):
+    def __init__(self, service, retention_days=None, projected=()):
         if not DATABASE_URL:
             raise NoDatabase(
                 "this component persists to PostgreSQL and DATABASE_URL is not set"
             )
         self.service = service
         self.retention_days = retention_days
+        # Columns derived from what the requirements named. The record is still
+        # stored whole in `body`; these are a projection of it, so the database
+        # can be queried through them and nothing is lost when the derivation
+        # names a field a record does not carry.
+        self.projected = tuple(projected or ())
         self.schema = schema_for(service)
         self._lock = threading.Lock()
         self._connection = psycopg.connect(DATABASE_URL, autocommit=True)
@@ -171,16 +176,26 @@ class Store:
             stored["id"] = self.next_id()
         stored["id"] = str(stored["id"])
         stored["owner"] = str(owner or "")
+        columns = ["id", "owner", "body", "created_at"] + list(self.projected)
+        placeholders = "%s, %s, %s, to_timestamp(%s)" + ", %s" * len(self.projected)
+        updates = ", ".join(
+            [f"{name} = EXCLUDED.{name}" for name in ("owner", "body")]
+            + [f'"{name}" = EXCLUDED."{name}"' for name in self.projected]
+        )
+        values = [stored["id"], stored["owner"], json.dumps(stored), clock.now()]
+        for name in self.projected:
+            value = stored.get(name)
+            values.append(None if value is None else str(value))
         with self._lock, self._connection.cursor() as cursor:
             # created_at comes from the application's clock, not the database's.
             # A record's age is something a test has to be able to change, and
             # `DEFAULT now()` is the one value in this table nothing can move.
             cursor.execute(
-                f'INSERT INTO "{self.schema}".records (id, owner, body, created_at)'
-                " VALUES (%s, %s, %s, to_timestamp(%s))"
-                " ON CONFLICT (id) DO UPDATE SET owner = EXCLUDED.owner,"
-                " body = EXCLUDED.body",
-                (stored["id"], stored["owner"], json.dumps(stored), clock.now()),
+                f'INSERT INTO "{self.schema}".records '
+                f"({', '.join(chr(34) + c + chr(34) for c in columns)})"
+                f" VALUES ({placeholders})"
+                f" ON CONFLICT (id) DO UPDATE SET {updates}",
+                tuple(values),
             )
         return dict(stored)
 
@@ -252,8 +267,8 @@ class Store:
 _open = {}
 
 
-def open_store(service, retention_days=None):
+def open_store(service, retention_days=None, projected=()):
     """The store for this service. One per service name, per process."""
     if service not in _open:
-        _open[service] = Store(service, retention_days)
+        _open[service] = Store(service, retention_days, projected)
     return _open[service]
