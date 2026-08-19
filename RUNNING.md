@@ -24,6 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
+- `bookmarks.py` serves `/bookmarks` — the system shall store a bookmark with its url and a title and return it by id
 - `notes.py` serves `/notes` — the system shall store a note with its text and return it by id
 
 ## Flags
@@ -36,4 +37,4 @@ per promotion, carrying the work item that caused it.
 
 Currently on:
 
-_none: everything is dark_
+- `flag.r_1031`
