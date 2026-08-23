@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `bookmarks.py` serves `/bookmarks` — the system shall store a bookmark with its url, a title and a description and return it by id
+- `changelogs.py` serves `/changelogs` — the system shall store a changelog note with its version and summary and return it by id
 - `notes.py` serves `/notes` — the system shall store a note with its text and return it by id
 
 ## Flags
