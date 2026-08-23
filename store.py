@@ -8,7 +8,16 @@ One database schema per service, owned by that service and touched by no other
 applied in order at startup and recorded in the service's own `schema_version`
 table, so running against a database that already holds data is the ordinary
 case rather than the dangerous one.
+
+Every value reaching the database goes through a `%s` placeholder. The only
+things interpolated into a statement are identifiers the factory derived — the
+service's schema name and the column names its requirements asked for — because
+no placeholder syntax exists for an identifier. That is why the SAST rule is
+suppressed for this file and nowhere else: it is a true statement about this
+module rather than a judgement about the rule, and
+`test_every_interpolation_in_the_store_is_an_identifier` is what keeps it true.
 """
+# ruff: noqa: S608
 
 import json
 import os
@@ -87,6 +96,36 @@ def _check_available():
         raise StoreUnavailable("the storage this component depends on is unavailable")
 
 
+# How many times a store operation tries before giving up. One unless the
+# retry-with-backoff Pattern applies, which happens only when a requirement
+# answered "retry, then reject" (docs/17 W4). Bounded because the caller is an
+# HTTP request with somebody waiting on it: an unbounded retry turns one slow
+# dependency into an outage of everything queued behind it.
+_BACKOFF_SECONDS = (0.05, 0.15)
+
+# What actually happened. "Retried with backoff" is invisible from outside, and
+# behaviour nothing can see is behaviour nothing can check.
+counters = {"storage_attempts": 0, "storage_retries": 0, "storage_failures": 0}
+
+
+def _attempt(call, attempts):
+    """Run it, retrying a storage failure, and re-raise the last one."""
+    last = None
+    for attempt in range(max(1, attempts)):
+        counters["storage_attempts"] += 1
+        try:
+            return call()
+        except StoreUnavailable as error:
+            last = error
+            if attempt == max(1, attempts) - 1:
+                break
+            counters["storage_retries"] += 1
+            time.sleep(_BACKOFF_SECONDS[min(attempt, len(_BACKOFF_SECONDS) - 1)])
+    counters["storage_failures"] += 1
+    raise last
+
+
+
 DATABASE_URL = os.environ.get("DATABASE_URL", "")
 MIGRATIONS = pathlib.Path(__file__).resolve().parent / "migrations"
 
@@ -105,13 +144,14 @@ class Store:
 
     durable = True
 
-    def __init__(self, service, retention_days=None, projected=()):
+    def __init__(self, service, retention_days=None, projected=(), attempts=1):
         if not DATABASE_URL:
             raise NoDatabase(
                 "this component persists to PostgreSQL and DATABASE_URL is not set"
             )
         self.service = service
         self.retention_days = retention_days
+        self.attempts = attempts
         # Columns derived from what the requirements named. The record is still
         # stored whole in `body`; these are a projection of it, so the database
         # can be queried through them and nothing is lost when the derivation
@@ -200,6 +240,9 @@ class Store:
         return dict(stored)
 
     def get(self, record_id):
+        return _attempt(lambda: self._get(record_id), self.attempts)
+
+    def _get(self, record_id):
         _check_available()
         self._expire()
         with self._lock, self._connection.cursor() as cursor:
@@ -267,8 +310,8 @@ class Store:
 _open = {}
 
 
-def open_store(service, retention_days=None, projected=()):
+def open_store(service, retention_days=None, projected=(), attempts=1):
     """The store for this service. One per service name, per process."""
     if service not in _open:
-        _open[service] = Store(service, retention_days, projected)
+        _open[service] = Store(service, retention_days, projected, attempts)
     return _open[service]
