@@ -24,6 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
+- `callers.py` serves `/callers` — the system shall list the caller's invoices ordered by due date
 - `invoices.py` serves `/invoices` — the system shall store an invoice with its amount and due date and return it by id
 - `payments.py` serves `/payments` — the system shall store a payment with its amount and paid date and return it by id
 - `receipts.py` serves `/receipts` — the system shall store a receipt with its total and issued date and return it by id
@@ -39,4 +40,7 @@ per promotion, carrying the work item that caused it.
 
 Currently on:
 
+- `flag.r_1041`
+- `flag.r_1042`
+- `flag.r_1043`
 - `flag.r_1044`
