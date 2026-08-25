@@ -24,6 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
+- `receipts.py` serves `/receipts` — the system shall store a receipt with its total and issued date and return it by id
 - `subscriptions.py` serves `/subscriptions` — the system shall store a subscription with its plan name and started date and return it by id
 
 ## Flags
@@ -36,4 +37,4 @@ per promotion, carrying the work item that caused it.
 
 Currently on:
 
-_none: everything is dark_
+- `flag.r_1044`

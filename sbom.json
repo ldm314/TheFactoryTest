@@ -7,6 +7,11 @@
       "version": "3.12"
     },
     {
+      "name": "decimal",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "http",
       "source": "stdlib",
       "version": "3.12"
@@ -47,6 +52,6 @@
       "version": "3.12"
     }
   ],
-  "digest": "sha256:cd667a43a9a1dd08e53ac434ac19267164e65e637759b3283a19a4f38b15b3bb",
+  "digest": "sha256:87e0bca6b43d6e434968022afd35a9c5a26d2724d8091afa3450c8473680a220",
   "python": "3.12"
 }
