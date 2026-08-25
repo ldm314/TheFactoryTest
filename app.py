@@ -12,6 +12,7 @@ import re
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import flags
+import receipts
 import subscriptions
 
 SERVICE_NAME = 'Factory Test'
@@ -21,6 +22,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 # One entry per component: its base path, its request handler, and the
 # operations it serves. A route whose flag is not on does not exist yet.
 COMPONENTS = [
+    {"service": 'receipts', "base_path": '/receipts', "handler": receipts.Handler, "routes": [('POST', '^/receipts/?$', 'flag.r_1043'), ('GET', '^/receipts/[^/]+/?$', 'flag.r_1043')]},
     {"service": 'subscriptions', "base_path": '/subscriptions', "handler": subscriptions.Handler, "routes": [('POST', '^/subscriptions/?$', 'flag.r_1044'), ('GET', '^/subscriptions/[^/]+/?$', 'flag.r_1044')]},
 ]
 
