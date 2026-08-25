@@ -24,6 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
+- `invoices.py` serves `/invoices` — the system shall store an invoice with its amount and due date and return it by id
 - `payments.py` serves `/payments` — the system shall store a payment with its amount and paid date and return it by id
 - `receipts.py` serves `/receipts` — the system shall store a receipt with its total and issued date and return it by id
 - `subscriptions.py` serves `/subscriptions` — the system shall store a subscription with its plan name and started date and return it by id
