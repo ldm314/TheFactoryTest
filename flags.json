@@ -1,5 +1,8 @@
 {
   "flags": {
+    "flag.r_1041": true,
+    "flag.r_1042": false,
+    "flag.r_1043": false,
     "flag.r_1044": true
   }
 }
