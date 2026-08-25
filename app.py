@@ -12,6 +12,7 @@ import re
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import flags
+import callers
 import invoices
 import payments
 import receipts
@@ -24,6 +25,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 # One entry per component: its base path, its request handler, and the
 # operations it serves. A route whose flag is not on does not exist yet.
 COMPONENTS = [
+    {"service": 'callers', "base_path": '/callers', "handler": callers.Handler, "routes": [('POST', '^/callers/?$', 'flag.r_1049'), ('GET', '^/callers/[^/]+/?$', 'flag.r_1049'), ('GET', '^/callers/?$', 'flag.r_1049')]},
     {"service": 'invoices', "base_path": '/invoices', "handler": invoices.Handler, "routes": [('POST', '^/invoices/?$', 'flag.r_1041'), ('GET', '^/invoices/[^/]+/?$', 'flag.r_1041')]},
     {"service": 'payments', "base_path": '/payments', "handler": payments.Handler, "routes": [('POST', '^/payments/?$', 'flag.r_1042'), ('GET', '^/payments/[^/]+/?$', 'flag.r_1042')]},
     {"service": 'receipts', "base_path": '/receipts', "handler": receipts.Handler, "routes": [('POST', '^/receipts/?$', 'flag.r_1043'), ('GET', '^/receipts/[^/]+/?$', 'flag.r_1043')]},
