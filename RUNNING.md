@@ -24,6 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
+- `attachs.py` serves `/attachs` — the system shall attach a payment to an invoice by invoice id and refuse the payment when no such invoice exists
 - `callers.py` serves `/callers` — the system shall list the caller's invoices ordered by due date
 - `invoices.py` serves `/invoices` — the system shall store an invoice with its amount and due date and return it by id
 - `payments.py` serves `/payments` — the system shall store a payment with its amount and paid date and return it by id
@@ -44,3 +45,4 @@ Currently on:
 - `flag.r_1042`
 - `flag.r_1043`
 - `flag.r_1044`
+- `flag.r_1049`
