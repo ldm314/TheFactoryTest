@@ -29,6 +29,7 @@ them and reports which flags are on.
 - `invoices.py` serves `/invoices` — the system shall store an invoice with its amount and due date and return it by id
 - `payments.py` serves `/payments` — the system shall store a payment with its amount and paid date and return it by id
 - `receipts.py` serves `/receipts` — the system shall store a receipt with its total and issued date and return it by id
+- `refunds.py` serves `/refunds` — the system shall store a refund with its amount and reason linked to a payment id and refuse it when no such payment exists
 - `subscriptions.py` serves `/subscriptions` — the system shall store a subscription with its plan name and started date and return it by id
 
 ## Flags
@@ -45,4 +46,5 @@ Currently on:
 - `flag.r_1042`
 - `flag.r_1043`
 - `flag.r_1044`
+- `flag.r_1047`
 - `flag.r_1049`

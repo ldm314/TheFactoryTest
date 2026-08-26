@@ -17,6 +17,7 @@ import callers
 import invoices
 import payments
 import receipts
+import refunds
 import subscriptions
 
 SERVICE_NAME = 'Factory Test'
@@ -31,6 +32,7 @@ COMPONENTS = [
     {"service": 'invoices', "base_path": '/invoices', "handler": invoices.Handler, "routes": [('POST', '^/invoices/?$', 'flag.r_1041'), ('GET', '^/invoices/[^/]+/?$', 'flag.r_1041')]},
     {"service": 'payments', "base_path": '/payments', "handler": payments.Handler, "routes": [('POST', '^/payments/?$', 'flag.r_1042'), ('GET', '^/payments/[^/]+/?$', 'flag.r_1042')]},
     {"service": 'receipts', "base_path": '/receipts', "handler": receipts.Handler, "routes": [('POST', '^/receipts/?$', 'flag.r_1043'), ('GET', '^/receipts/[^/]+/?$', 'flag.r_1043')]},
+    {"service": 'refunds', "base_path": '/refunds', "handler": refunds.Handler, "routes": [('POST', '^/refunds/?$', 'flag.r_1052'), ('GET', '^/refunds/[^/]+/?$', 'flag.r_1052')]},
     {"service": 'subscriptions', "base_path": '/subscriptions', "handler": subscriptions.Handler, "routes": [('POST', '^/subscriptions/?$', 'flag.r_1044'), ('GET', '^/subscriptions/[^/]+/?$', 'flag.r_1044')]},
 ]
 
