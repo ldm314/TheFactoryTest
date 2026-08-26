@@ -24,6 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
+- `access.py` serves `/access` — the system shall store an access token with its token value and expires_at and return it by id
 - `attachs.py` serves `/attachs` — the system shall attach a payment to an invoice by invoice id and refuse the payment when no such invoice exists
 - `callers.py` serves `/callers` — the system shall list the caller's invoices ordered by due date
 - `invoices.py` serves `/invoices` — the system shall store an invoice with its amount and due date and return it by id
@@ -48,3 +49,4 @@ Currently on:
 - `flag.r_1044`
 - `flag.r_1047`
 - `flag.r_1049`
+- `flag.r_1052`
