@@ -12,6 +12,7 @@ import re
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import flags
+import access
 import attachs
 import callers
 import invoices
@@ -27,6 +28,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 # One entry per component: its base path, its request handler, and the
 # operations it serves. A route whose flag is not on does not exist yet.
 COMPONENTS = [
+    {"service": 'access', "base_path": '/access', "handler": access.Handler, "routes": [('POST', '^/access/?$', 'flag.r_1053'), ('GET', '^/access/[^/]+/?$', 'flag.r_1053')]},
     {"service": 'attachs', "base_path": '/attachs', "handler": attachs.Handler, "routes": [('POST', '^/attachs/?$', 'flag.r_1047'), ('GET', '^/attachs/[^/]+/?$', 'flag.r_1047')]},
     {"service": 'callers', "base_path": '/callers', "handler": callers.Handler, "routes": [('POST', '^/callers/?$', 'flag.r_1049'), ('GET', '^/callers/[^/]+/?$', 'flag.r_1049'), ('GET', '^/callers/?$', 'flag.r_1049')]},
     {"service": 'invoices', "base_path": '/invoices', "handler": invoices.Handler, "routes": [('POST', '^/invoices/?$', 'flag.r_1041'), ('GET', '^/invoices/[^/]+/?$', 'flag.r_1041')]},
