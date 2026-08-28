@@ -26,6 +26,7 @@ them and reports which flags are on.
 
 - `customers.py` serves `/customers` — the system shall store a customer with its name and email and return it by id and refuse a create when email is missing
 - `notes.py` serves `/notes` — the system shall store a note with its text and return it by id
+- `tags.py` serves `/tags` — Tags must use UUID format for their identifiers; Reject duplicate labels only within the same owner's tags Currently: convergence budget of 3 cycle(s) exhausted after 3 cycle(s)
 
 ## Flags
 
