@@ -1,3 +1,6 @@
 {
-  "flags": {}
+  "flags": {
+    "flag.f_1074": false,
+    "flag.r_1067": true
+  }
 }
