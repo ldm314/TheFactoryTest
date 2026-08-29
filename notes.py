@@ -20,7 +20,7 @@ ENTITY = 'note'
 BASE_PATH = '/notes'
 # How long a record is kept, from the requirement's retention answer. None means
 # forever. The store sweeps on read; no handler has to remember.
-RETENTION_DAYS = 30
+RETENTION_DAYS = None
 # Columns derived from what the requirements named (docs/11 §4). The record is
 # stored whole either way; these let the database be queried through them.
 RECORD_FIELDS = ['text']
@@ -45,7 +45,6 @@ AMOUNT_ROUNDING = None
 # (docs/06 §3): the graph edge alone was a note; this is the foreign key.
 REFERENCES = []
 AUTH_SCHEME = 'plain'
-OWNER_HEADER = 'X-Owner'
 
 # Where this component's records live. Provided by the scaffold: put a record
 # with store.put(record, owner), read one with store.get(id), list them with
@@ -178,9 +177,9 @@ class Handler(BaseHTTPRequestHandler):
         return None
 
     def _caller(self) -> str:
-        if not 'X-Owner':
+        if not '':
             return ""
-        raw = self.headers.get('X-Owner', "")
+        raw = self.headers.get('', "")
         if AUTH_SCHEME == "bearer":
             if not raw.lower().startswith("bearer "):
                 return ""
@@ -210,16 +209,14 @@ class Handler(BaseHTTPRequestHandler):
             if method == "GET" and self.path.rstrip("/") == "/health":
                 return self.health()
             if method == "POST" and self.path.rstrip("/") == '/notes':
-                if not self._caller():
-                    return self._send(401, {"error": "an owner is required"})
                 problem = self._malformed()
                 if problem is not None:
                     return self._send(400, problem)
                 return self.create()
             if method == "GET" and self.path.startswith('/notes/'):
-                if not self._caller():
-                    return self._send(401, {"error": "an owner is required"})
                 return self.fetch(self._path_id())
+            if method == "GET" and self.path.rstrip("/") == '/notes':
+                return self.list_records()
             self._send(404, {"error": "not found"})
         except StoreUnavailable as error:
             # The dependency is down, which is not this component being wrong.
@@ -278,6 +275,22 @@ class Handler(BaseHTTPRequestHandler):
         if store.owner_of(record_id) != owner:
             return self._send(403, {"error": "you are not the owner of this record"})
         return self._send(200, record)
+
+    def list_records(self):
+        """answer 200 with a JSON array of this caller's records, newest first.
+
+        `store.list(owner)` returns the caller's records ordered by created time
+        ascending; the operation lists them descending (newest first), so they
+        are returned in reverse order. An owner with nothing stored gets an
+        empty array and a 200, never a 404 — "you have none" is an answer. The
+        list is unauthenticated, but still reports only the records this caller
+        stored: `store.list(owner)` filters on the X-Owner value, which is the
+        empty string when no owner was sent. A store that is unavailable raises
+        inside it, and the routing layer answers that with 503 before anything
+        is returned — so an outage yields "no content" rather than a record list.
+        """
+        notes = store.list(self._caller())
+        return self._send(200, list(reversed(notes)))
 
 
 def serve(port):

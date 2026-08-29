@@ -14,6 +14,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import flags
 import customers
 import notes
+import tags
 
 SERVICE_NAME = 'Factory Test 3'
 SERVICE_VERSION = "1.0.0"
@@ -23,7 +24,8 @@ PORT = int(os.environ.get("PORT", "8080"))
 # operations it serves. A route whose flag is not on does not exist yet.
 COMPONENTS = [
     {"service": 'customers', "base_path": '/customers', "handler": customers.Handler, "routes": [('POST', '^/customers/?$', 'flag.r_1067'), ('GET', '^/customers/[^/]+/?$', 'flag.r_1067')]},
-    {"service": 'notes', "base_path": '/notes', "handler": notes.Handler, "routes": [('POST', '^/notes/?$', 'flag.r_1066'), ('GET', '^/notes/[^/]+/?$', 'flag.r_1066')]},
+    {"service": 'notes', "base_path": '/notes', "handler": notes.Handler, "routes": [('POST', '^/notes/?$', 'flag.r_1066'), ('GET', '^/notes/[^/]+/?$', 'flag.r_1066'), ('GET', '^/notes/?$', 'flag.r_1069')]},
+    {"service": 'tags', "base_path": '/tags', "handler": tags.Handler, "routes": [('POST', '^/tags/?$', 'flag.f_1074'), ('GET', '^/tags/[^/]+/?$', 'flag.f_1074')]},
 ]
 
 
