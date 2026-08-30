@@ -14,6 +14,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import flags
 import customers
 import notes
+import status
 import tags
 
 SERVICE_NAME = 'Factory Test 3'
@@ -25,6 +26,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 COMPONENTS = [
     {"service": 'customers', "base_path": '/customers', "handler": customers.Handler, "routes": [('POST', '^/customers/?$', 'flag.r_1067'), ('GET', '^/customers/[^/]+/?$', 'flag.r_1067')]},
     {"service": 'notes', "base_path": '/notes', "handler": notes.Handler, "routes": [('POST', '^/notes/?$', 'flag.r_1066'), ('GET', '^/notes/[^/]+/?$', 'flag.r_1066'), ('GET', '^/notes/?$', 'flag.r_1069')]},
+    {"service": 'status', "base_path": '/status', "handler": status.Handler, "routes": [('POST', '^/status/?$', 'flag.f_1075'), ('GET', '^/status/[^/]+/?$', 'flag.f_1075')]},
     {"service": 'tags', "base_path": '/tags', "handler": tags.Handler, "routes": [('POST', '^/tags/?$', 'flag.f_1074'), ('GET', '^/tags/[^/]+/?$', 'flag.f_1074')]},
 ]
 
