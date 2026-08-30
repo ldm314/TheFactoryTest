@@ -1,0 +1,22 @@
+-- payments: initial schema, derived from the requirement (docs/11 §4).
+--
+-- Expand-phase and additive: every statement is IF NOT EXISTS, so re-applying
+-- this file to a database already at this version changes nothing. That is not
+-- politeness — it is the property the migration check measures.
+
+CREATE SCHEMA IF NOT EXISTS "svc_payments";
+
+CREATE SEQUENCE IF NOT EXISTS "svc_payments".record_id AS bigint START 1;
+
+CREATE TABLE IF NOT EXISTS "svc_payments".records (
+    "id" text PRIMARY KEY,
+    "owner" text NOT NULL DEFAULT '',
+    "body" jsonb NOT NULL,
+    "created_at" timestamptz NOT NULL DEFAULT now(),
+    "payment_id" text,
+    "payload" text,
+    "refuse_signature_header_does_not_match" text
+);
+
+CREATE INDEX IF NOT EXISTS records_owner_idx
+    ON "svc_payments".records (owner);
