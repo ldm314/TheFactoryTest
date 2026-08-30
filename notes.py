@@ -281,15 +281,20 @@ class Handler(BaseHTTPRequestHandler):
 
         `store.list(owner)` returns the caller's records ordered by created time
         ascending; the operation lists them descending (newest first), so they
-        are returned in reverse order. An owner with nothing stored gets an
-        empty array and a 200, never a 404 — "you have none" is an answer. The
-        list is unauthenticated, but still reports only the records this caller
-        stored: `store.list(owner)` filters on the X-Owner value, which is the
-        empty string when no owner was sent. A store that is unavailable raises
-        inside it, and the routing layer answers that with 503 before anything
-        is returned — so an outage yields "no content" rather than a record list.
+        are returned in reverse order. The list is unauthenticated, but still
+        reports only the records this caller stored: `store.list(owner)` filters
+        on the X-Owner value, which is the empty string when no owner was sent.
+        A store that is unavailable raises inside it, and the routing layer
+        answers that with 503 before anything is returned — so an outage yields
+        "no content" rather than a record list.
+
+        When the collection comes back empty there is nothing to answer with:
+        the contract says respond Not Found rather than a 200 carrying an empty
+        array, so an owner with no stored records gets 404 instead of [].
         """
         notes = store.list(self._caller())
+        if not notes:
+            return self._send(404, {"error": "no such records"})
         return self._send(200, list(reversed(notes)))
 
 
