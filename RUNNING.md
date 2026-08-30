@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `customers.py` serves `/customers` — the system shall store a customer with its name and email and return it by id and refuse a create when email is missing
+- `idempotencys.py` serves `/idempotencys` — the system shall accept an Idempotency-Key header when creating a payment with amount and currency and return the original payment when the same key is reused
 - `notes.py` serves `/notes` — the system shall list notes ordered by created time newest first and return an empty list when none exist
 - `status.py` serves `/status` — When the notes return by ID endpoint is called with a non-existent ID, the system shall return a 404 status code Currently: returns 404
 - `tags.py` serves `/tags` — Tags must use UUID format for their identifiers; Reject duplicate labels only within the same owner's tags Currently: convergence budget of 3 cycle(s) exhausted after 3 cycle(s)

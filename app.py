@@ -13,6 +13,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import flags
 import customers
+import idempotencys
 import notes
 import status
 import tags
@@ -25,6 +26,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 # operations it serves. A route whose flag is not on does not exist yet.
 COMPONENTS = [
     {"service": 'customers', "base_path": '/customers', "handler": customers.Handler, "routes": [('POST', '^/customers/?$', 'flag.r_1067'), ('GET', '^/customers/[^/]+/?$', 'flag.r_1067')]},
+    {"service": 'idempotencys', "base_path": '/idempotencys', "handler": idempotencys.Handler, "routes": [('POST', '^/idempotencys/?$', 'flag.r_1070'), ('GET', '^/idempotencys/[^/]+/?$', 'flag.r_1070')]},
     {"service": 'notes', "base_path": '/notes', "handler": notes.Handler, "routes": [('POST', '^/notes/?$', 'flag.r_1066'), ('GET', '^/notes/[^/]+/?$', 'flag.r_1066'), ('GET', '^/notes/?$', 'flag.r_1069')]},
     {"service": 'status', "base_path": '/status', "handler": status.Handler, "routes": [('POST', '^/status/?$', 'flag.f_1075'), ('GET', '^/status/[^/]+/?$', 'flag.f_1075')]},
     {"service": 'tags', "base_path": '/tags', "handler": tags.Handler, "routes": [('POST', '^/tags/?$', 'flag.f_1074'), ('GET', '^/tags/[^/]+/?$', 'flag.f_1074')]},
