@@ -50,8 +50,13 @@
       "name": "time",
       "source": "stdlib",
       "version": "3.12"
+    },
+    {
+      "name": "uuid",
+      "source": "stdlib",
+      "version": "3.12"
     }
   ],
-  "digest": "sha256:1d57165baef89e658d2f956575a1f918d3145f8b009f1eb042b3b32cb3ad107f",
+  "digest": "sha256:977452fd24f0495788a9970ec7036508d289862e33a0328267cc5e8c65886eb5",
   "python": "3.12"
 }
