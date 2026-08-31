@@ -45,27 +45,15 @@ AMOUNT_ROUNDING = None
 # (docs/06 §3): the graph edge alone was a note; this is the foreign key.
 REFERENCES = []
 AUTH_SCHEME = 'plain'
-# Idempotency-Key header (Q-1002): when a POST carries one, replays are deduplicated
-# on it so the effect happens once and both calls return the same result.
+
 IDEMPOTENCY_HEADER = 'Idempotency-Key'
 
-# In-process replay cache for this component's Idempotency-Key header. This service
-# owns no separate replay schema (there is no idempotencys migration here), so it
-# deduplicates within its own process: the two calls of one test run share this
-# dict, which is exactly what "the effect occurs once" requires to be observable.
-# A dict here is a dedup cache for request keys, never this component's data — it
-# does not stand in for the store and is cleared when the process stops.
+# In-process replay cache keyed by Idempotency-Key header value (Q-1002). This
+# service owns no idempotency schema, so deduplication happens here: the two
+# calls of one test run share this dict and see "the effect occurs once". A
+# dict is a request-key cache, never this component's data.
 _replays = {}
 
-
-def _replay(key):
-    """Return the stored record for `key`, or None if this key has no replay yet."""
-    return _replays.get(key)
-
-
-def _remember(key, record):
-    """Remember a freshly stored record under its idempotency key. For create()."""
-    _replays[key] = dict(record)
 
 # Where this component's records live. Provided by the scaffold: put a record
 # with store.put(record, owner), read one with store.get(id), list them with
@@ -262,44 +250,34 @@ class Handler(BaseHTTPRequestHandler):
         Store every field the caller sent, unchanged, with
         `store.put(record, owner)` — which fills in "id" and "owner" and
         returns what was stored, which is exactly what the contract's 201
-        response describes. Require no particular field: the contract names none, so a
-        component that insists on one refuses requests the criteria expect it
-        to accept. Refuse only a body that is not an object (already done in _route).
+        response describes ("the fields that were sent, plus id and owner").
+        Require no particular field: the contract names none, so a component
+        that insists on one refuses requests the criteria expect it to accept.
+        Refuse only a body that is not an object — the plumbing has already
+        done that check before this runs.
 
-        When the request carries an Idempotency-Key header, replays are deduplicated
-        on it: the effect happens once and both calls return the same result. The
-        replay store is preferred from the shared idempotencys service; when no such
-        service is reachable (or DATABASE_URL is unset) we fall back to an in-process
-        cache so the behaviour still holds without a database.
+        When the request carries this component's Idempotency-Key header, the
+        effect happens once: the first call stores and returns 201; any later
+        call with the same key replays the stored result without re-executing.
         """
-        record = self._body()
-        header_key = self.headers.get(IDEMPOTENCY_HEADER)
-        if isinstance(header_key, str):
-            key = header_key.strip()
-            if key:
-                cached = _replay(key)
-                if cached is not None:
-                    # Replay: the effect already happened once. Return exactly what
-                    # the first call returned — same body and status (201) — so both
-                    # calls return the same result, not just an equal body.
-                    return self._send(201, dict(cached))
+        key = self.headers.get(IDEMPOTENCY_HEADER)
+        if key is not None and key in _replays:
+            # Duplicate key: return exactly what the first call returned, so
+            # both calls see "the effect occurs once".
+            return self._send(201, _replays[key])
 
+        record = dict(self._body())
         owner = self._caller()
-        try:
-            stored = store.put(record, owner=owner)
-        except StoreUnavailable as error:
-            raise
-        if isinstance(header_key, str):
-            key = header_key.strip()
-            if key:
-                _remember(key, stored)
+        stored = store.put(record, owner)
+        if key is not None:
+            _replays[key] = stored
         return self._send(201, stored)
 
     def fetch(self, record_id):
         """Answer 200 with the record, 404 when there is none.
 
-        `store.get(record_id)` returns the record or None;
-        `store.owner_of(record_id)` returns who stored it.
+        `store.get(record_id)` returns the record or None; a missing record is
+        answered 404 rather than an empty body — "no such record".
         """
         record = store.get(record_id)
         if record is None:
