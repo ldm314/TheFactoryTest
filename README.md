@@ -1,3 +1,3 @@
 # TheFactoryTest
 
-Greenfield reset for Factory ladder / Adjust requirements testing.
+Greenfield reset — clean product area for Factory testing.
