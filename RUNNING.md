@@ -26,7 +26,7 @@ them and reports which flags are on.
 
 - `customers.py` serves `/customers` — the system shall store a customer with its name and email and return it by id and refuse a create when email is missing
 - `notes.py` serves `/notes` — The system shall return a list of notes when the request succeeds. When no notes are found, the system shall return a 404 Not Found status code rather than an empty list Currently: /notes returns a 404
-- `payments.py` serves `/payments` — the system shall accept an Idempotency-Key header when creating a payment with amount and currency and return the original payment when the same key is reused
+- `payments.py` serves `/payments` — the system shall store a payment webhook with its payment_id and payload and refuse it when the X-Signature header does not match
 - `status.py` serves `/status` — When the notes return by ID endpoint is called with a non-existent ID, the system shall return a 404 status code Currently: returns 404
 - `tags.py` serves `/tags` — Tags must use UUID format for their identifiers; Reject duplicate labels only within the same owner's tags Currently: convergence budget of 3 cycle(s) exhausted after 3 cycle(s)
 
