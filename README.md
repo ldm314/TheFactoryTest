@@ -8,10 +8,10 @@ See `RUNNING.md` for how to start it.
 
 ## Scaffold
 
-`python-http-postgres@1` — Python 3.12 stdlib HTTP, PostgreSQL per service.
+`python-fastapi-postgres@1` — FastAPI + uvicorn, PostgreSQL per service (default greenfield).
 
 - one module per component, named for the resource it serves
-- a BaseHTTPRequestHandler subclass and a serve(port) function
+- a FastAPI APIRouter named `router` and handler methods on Handler
 - JSON in and JSON out; the plumbing is provided and not to be changed
 - records go through store.put/get/list; store.py is provided
 - each service owns one database schema and touches no other (D-30)
