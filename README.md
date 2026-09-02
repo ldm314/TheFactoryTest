@@ -8,7 +8,7 @@ See `RUNNING.md` for how to start it.
 
 ## Scaffold
 
-`python-http-postgres@1` — one Python HTTP service per component, persisting to PostgreSQL, one schema per service.
+`python-http-postgres@1` — Python 3.12 stdlib HTTP, PostgreSQL per service.
 
 - one module per component, named for the resource it serves
 - a BaseHTTPRequestHandler subclass and a serve(port) function
