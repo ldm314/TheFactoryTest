@@ -1,0 +1,62 @@
+{
+  "base_image": "python:3.12-slim",
+  "components": [
+    {
+      "name": "datetime",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "decimal",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "fastapi",
+      "source": "image",
+      "version": "0.115.6"
+    },
+    {
+      "name": "json",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "os",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "pathlib",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "psycopg",
+      "source": "image",
+      "version": "3.3.4"
+    },
+    {
+      "name": "re",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "threading",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "time",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "uvicorn",
+      "source": "image",
+      "version": "0.32.1"
+    }
+  ],
+  "digest": "sha256:b243389d900e160f754776c5eba9f597ec95fd13ab0793763b9ff8e609b51776",
+  "python": "3.12"
+}
