@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `foundation.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `ws.py` serves `/ws` — the system shall accept a WebSocket connection and deliver subscribed messages on that channel
 
 ## Flags
 
