@@ -25,6 +25,8 @@ them and reports which flags are on.
 ## Components
 
 - `foundation.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `oauth.py` serves `/oauth` — the system shall issue a single-use authorization code valid for 10 minutes, return it via redirect to the client's registered redirect_uri, bind the approved scopes to the code, and reject expired, reused, or scope-mismatched redemption attempts with HTTP 400 Invalid Grant
+- `ws.py` serves `/ws` — the system shall accept a WebSocket connection and deliver subscribed messages on that channel
 
 ## Flags
 
