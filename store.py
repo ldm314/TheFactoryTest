@@ -156,7 +156,10 @@ class Store:
         # stored whole in `body`; these are a projection of it, so the database
         # can be queried through them and nothing is lost when the derivation
         # names a field a record does not carry.
-        self.projected = tuple(projected or ())
+        self.projected = tuple(
+            name for name in (projected or ())
+            if name and name not in ("id", "owner", "body", "created_at")
+        )
         self.schema = schema_for(service)
         self._lock = threading.Lock()
         self._connection = psycopg.connect(DATABASE_URL, autocommit=True)
