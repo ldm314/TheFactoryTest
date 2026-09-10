@@ -52,11 +52,16 @@
       "version": "3.12"
     },
     {
+      "name": "uuid",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "uvicorn",
       "source": "image",
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:bc3e9a8502684167364d9858534f3ebf539431ba683f330ac36ba0c65490202a",
+  "digest": "sha256:b567d569d0384cc2e2b6555ec6b0956a572004e92b05f15909499792a0d520ed",
   "python": "3.12"
 }

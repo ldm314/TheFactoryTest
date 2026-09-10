@@ -10,18 +10,27 @@ import flags
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from exchanges import router as exchanges_router
 from foundation import router as foundation_router
+from oauth import router as oauth_router
+from ws import router as ws_router
 
 SERVICE_NAME = 'Factory Test 4'
 SERVICE_VERSION = "1.0.0"
 PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
+    {"service": 'exchanges', "base_path": '/exchanges', "routes": [('POST', '^/exchanges/?$', 'flag.r_1236')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
+    {"service": 'oauth', "base_path": '/oauth', "routes": [('GET', '^/oauth/authorize/?$', 'flag.r_1235'), ('POST', '^/oauth/token/?$', 'flag.r_1235')]},
+    {"service": 'ws', "base_path": '/ws', "routes": [('GET', '^/ws/?$', 'flag.r_1241')]},
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)
+app.include_router(exchanges_router)
 app.include_router(foundation_router)
+app.include_router(oauth_router)
+app.include_router(ws_router)
 
 
 @app.get("/health")
