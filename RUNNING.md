@@ -24,7 +24,15 @@ them and reports which flags are on.
 
 ## Components
 
+- `exchanges.py` serves `/exchanges` — the system shall exchange a valid authorization code for an access token and refuse invalid codes
 - `foundation.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `fulls.py` serves `/fulls` — Expected: Non-durable: events available only during active process lifetime; simplify initial implementation (Faster implementation; subscribers must be connected or polling during event window; no historical replay); Polling required: implement GET /domains/events endpoint; subscribers pull events on demand (Requires stateful event tracking per subscriber; more implementation complexity); Reference only: include resource ID and event metadata; subscribers fetch full state separately (Simplest payload structure; minimal implementation effort; requires additional subscriber API calls); Are there other constraints or priorities that should guide this requirement adjustment?: Keep MVP narrow: after a successful write, append an in-process event with resource id + metadata; expose GET /domains/events for polling. No durable history, no webhooks. Currently: Checks that failed: lint.static: domains.py:6:32: F401 [*] `fastapi.HTTPException` imported but unused; domains.py:11:19: F401 [*] `store.No; plumbing.intact: domains.py: _route_replace was rewritten; _run was rewritten. That part is derived from the contract an — repair stalled after 1 cycle(s): the same checks failed identically
+- `oauth.py` serves `/oauth` — the system shall issue a single-use authorization code valid for 10 minutes, return it via redirect to the client's registered redirect_uri, bind the approved scopes to the code, and reject expired, reused, or scope-mismatched redemption attempts with HTTP 400 Invalid Grant
+- `posts.py` serves `/posts` — the system shall store a post in a thread and return the post by id
+- `threads.py` serves `/threads` — the system shall store a thread in a forum and return the thread by id
+- `titles.py` serves `/titles` — the system shall store a forum with a title and return the forum by id
+- `users.py` serves `/users` — the system shall store a user with an email and return the user by id
+- `ws.py` serves `/ws` — the system shall accept a WebSocket connection and deliver subscribed messages on that channel
 
 ## Flags
 
