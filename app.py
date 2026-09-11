@@ -10,18 +10,36 @@ import flags
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from exchanges import router as exchanges_router
 from foundation import router as foundation_router
+from oauth import router as oauth_router
+from threads import router as threads_router
+from titles import router as titles_router
+from users import router as users_router
+from ws import router as ws_router
 
 SERVICE_NAME = 'Factory Test 4'
 SERVICE_VERSION = "1.0.0"
 PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
+    {"service": 'exchanges', "base_path": '/exchanges', "routes": [('POST', '^/exchanges/?$', 'flag.r_1236')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
+    {"service": 'oauth', "base_path": '/oauth', "routes": [('GET', '^/oauth/authorize/?$', 'flag.r_1235'), ('POST', '^/oauth/token/?$', 'flag.r_1235')]},
+    {"service": 'threads', "base_path": '/threads', "routes": [('POST', '^/threads/?$', 'flag.r_1239'), ('GET', '^/threads/[^/]+/?$', 'flag.r_1239')]},
+    {"service": 'titles', "base_path": '/titles', "routes": [('POST', '^/titles/?$', 'flag.r_1238'), ('GET', '^/titles/[^/]+/?$', 'flag.r_1238')]},
+    {"service": 'users', "base_path": '/users', "routes": [('POST', '^/users/?$', 'flag.r_1237'), ('GET', '^/users/[^/]+/?$', 'flag.r_1237')]},
+    {"service": 'ws', "base_path": '/ws', "routes": [('GET', '^/ws/?$', 'flag.r_1241')]},
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)
+app.include_router(exchanges_router)
 app.include_router(foundation_router)
+app.include_router(oauth_router)
+app.include_router(threads_router)
+app.include_router(titles_router)
+app.include_router(users_router)
+app.include_router(ws_router)
 
 
 @app.get("/health")
