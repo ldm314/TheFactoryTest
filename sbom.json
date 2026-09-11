@@ -17,6 +17,11 @@
       "version": "0.115.6"
     },
     {
+      "name": "hashlib",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "json",
       "source": "stdlib",
       "version": "3.12"
@@ -57,6 +62,6 @@
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:bc3e9a8502684167364d9858534f3ebf539431ba683f330ac36ba0c65490202a",
+  "digest": "sha256:d0d600607d43f96c22feb78a42926e03d2a8526053054f1ccf65421528f7539b",
   "python": "3.12"
 }
