@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `foundation.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `oauth_clients.py` serves `/oauth/clients` — The system shall expose OAuth client registration at /oauth/clients: an authenticated POST /oauth/clients returns HTTP 201 with JSON fields client_id and client_secret; GET /oauth/clients/{client_id} returns HTTP 200 with that client when the id exists, and HTTP 404 when the id does not exist; requests without auth return HTTP 401 Currently: create/readback/absent-id checks failed; clients component must satisfy POST 201 and GET 200/404 only
 
 ## Flags
 
