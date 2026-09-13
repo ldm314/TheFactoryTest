@@ -159,62 +159,6 @@ class Handler:
             },
         )
 
-    def get_authorize(self):
-        """Issue an authorization code for a registered client.
-
-        Query (or body) must name client_id and redirect_uri. Unknown
-        clients and non-matching redirect_uri values answer 400 with
-        an error field. A match stores a one-time code and returns
-        200 with code + location (harness-friendly; 302 also fine).
-        """
-        q = self._query() if hasattr(self, '_query') else {}
-        body = self._body() if not q.get('client_id') else {}
-        if not isinstance(body, dict):
-            body = {}
-        client_id = (q.get('client_id') or body.get('client_id') or '').strip()
-        redirect_uri = (q.get('redirect_uri') or body.get('redirect_uri') or '').strip()
-        if not client_id:
-            return self._send(400, {"error": "invalid_request"})
-        clients = open_store(
-            "oauth_clients", None,
-            ["client_id", "client_secret", "redirect_uri", "redirect_uris"],
-            STORE_ATTEMPTS,
-        )
-        record = clients.get(client_id)
-        if record is None:
-            return self._send(400, {"error": "invalid_client"})
-        allowed = record.get('redirect_uris') or record.get('redirect_uri') or ''
-        if isinstance(allowed, str) and allowed.startswith('['):
-            try:
-                import json as _json
-                allowed = _json.loads(allowed)
-            except Exception:
-                pass
-        if redirect_uri and allowed:
-            ok = (
-                redirect_uri in allowed
-                if isinstance(allowed, (list, tuple))
-                else redirect_uri == allowed or redirect_uri in str(allowed)
-            )
-            if not ok:
-                return self._send(400, {"error": "invalid_redirect_uri"})
-        code = secrets.token_urlsafe(24)
-        store.put(
-            {"id": code, "code": code, "client_id": client_id,
-             "redirect_uri": redirect_uri,
-             "issued_at": __import__("store").clock.now()},
-            owner=self._caller() or '',
-        )
-        sep = '&' if '?' in redirect_uri else '?'
-        location = (
-            f'{redirect_uri}{sep}code={code}' if redirect_uri else ''
-        )
-        return self._send(200, {
-            "code": code,
-            "authorization_code": code,
-            "location": location,
-        })
-
     def post_token(self):
         """Exchange an authorization code for an access token.
 
@@ -275,11 +219,6 @@ async def _run(handler, call):
 async def _route_health(request: Request):
     handler = Handler(request)
     return await _run(handler, lambda h: h.health())
-
-@router.get('/oauth/authorize')
-async def _route_get_authorize(request: Request):
-    handler = Handler(request)
-    return await _run(handler, lambda h: h.get_authorize())
 
 @router.post('/oauth/token')
 async def _route_post_token(request: Request):
