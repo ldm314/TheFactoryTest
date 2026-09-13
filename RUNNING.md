@@ -25,7 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `foundation.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
-- `oauth.py` serves `/oauth` — the system shall expose GET /oauth/authorize that issues an authorization code when client_id exists in oauth_clients and redirect_uri matches that client; refuse unknown client_id or non-matching redirect_uri with HTTP 400 including an error field Currently: get_authorize was NotImplementedError; oauth_clients sibling schema missing in isolation
+- `oauth.py` serves `/oauth` — Expected: No — allow unauthenticated requests to /oauth/authorize (return 200/302 to show login or consent) (Authorization endpoint accepts requests without Bearer token; user login happens within the authorize flow); Only at token exchange (POST /oauth/token) — /oauth/authorize just issues codes without checking them (Authorization endpoint succeeds immediately; token endpoint enforces expiry and single-use rules); HTTP 400 with JSON body containing 'error' and 'error_description' fields (OAuth 2.0 standard) (Complies with RFC 6749; clients expect error details in structured JSON) Currently: Behaviours that did not hold: Scenario: An expired authorization code is refused (POST /oauth/token); Scenario: A reused authorization code is refused (POST /oauth/token); Scenario: Exchange a valid authorization code for an access token — repair stalled after 1 cycle(s): the same checks failed identically
 - `oauth_clients.py` serves `/oauth/clients` — The system shall expose OAuth client registration at /oauth/clients: an authenticated POST /oauth/clients returns HTTP 201 with JSON fields client_id and client_secret; GET /oauth/clients/{client_id} returns HTTP 200 with that client when the id exists, and HTTP 404 when the id does not exist; requests without auth return HTTP 401 Currently: create/readback/absent-id checks failed; clients component must satisfy POST 201 and GET 200/404 only
 
 ## Flags
@@ -39,4 +39,5 @@ per promotion, carrying the work item that caused it.
 Currently on:
 
 - `flag.f_1284`
+- `flag.f_1288`
 - `flag.r_1266`
