@@ -24,7 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
-- `forums.py` serves `/forums` — the system shall store a forum with a title and optional description and return the forum by id
+- `forums.py` serves `/forums` — Expected: POST /forums/{forum_id}/threads stores a thread; GET /forums/{forum_id}/threads/{id} returns it; retries idempotent Currently: nested thread routes return 404 on staging; prior fixes thrashing on inherited forum ACs
 - `foundation.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
 - `oauth.py` serves `/oauth` — Expected: POST /oauth/token exchanges a valid unused authorization code for access_token (token_type Bearer) and refuses invalid, already-used, or expired codes with HTTP 400 including an error field Currently: token endpoint not delivered; isolation verify was green with scaffold post_token but rebuild stalled on E3 from stale authorize-without-seed tests; adjust-form fix W-1245 carried wrong authorize-auth wording
 - `oauth_clients.py` serves `/oauth/clients` — The system shall expose OAuth client registration at /oauth/clients: an authenticated POST /oauth/clients returns HTTP 201 with JSON fields client_id and client_secret; GET /oauth/clients/{client_id} returns HTTP 200 with that client when the id exists, and HTTP 404 when the id does not exist; requests without auth return HTTP 401 Currently: create/readback/absent-id checks failed; clients component must satisfy POST 201 and GET 200/404 only
@@ -45,3 +45,4 @@ Currently on:
 - `flag.f_1290`
 - `flag.r_1266`
 - `flag.r_1269`
+- `flag.r_1270`

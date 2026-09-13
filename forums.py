@@ -16,7 +16,7 @@ SERVICE_VERSION = "1.0.0"
 ENTITY = 'forum'
 BASE_PATH = '/forums'
 RETENTION_DAYS = None
-RECORD_FIELDS = ['title', 'description']
+RECORD_FIELDS = ['title', 'description', 'thread']
 STORE_ATTEMPTS = 1
 IDENTITY_FIELD = None
 UNIQUE_FIELDS = []
@@ -232,6 +232,59 @@ class Handler:
             return self._send(403, {"error": "forbidden"})
         return self._send(200, record)
 
+    def post_threads(self, forum_id):
+        """Store a thread under this forum.
+
+        Path param `forum_id` must name an existing forum; otherwise 404. The body is stored
+        in the `threads` store with `forum_id` set
+        from the path. Idempotency-Key (when configured) replays
+        the prior 201 so retries do not duplicate.
+        """
+        problem = self._malformed()
+        if problem is not None:
+            return self._send(400, problem)
+        body = self._body()
+        if not isinstance(body, dict):
+            return self._send(400, {"error": "the body must be a JSON object"})
+        parents = open_store(
+            'forums', None, [], STORE_ATTEMPTS,
+        )
+        if parents.get(forum_id) is None:
+            return self._send(404, {"error": "not found"})
+        children = open_store(
+            'threads', RETENTION_DAYS, RECORD_FIELDS, STORE_ATTEMPTS,
+        )
+        key = self._idempotency_key() if IDEMPOTENCY_HEADER else ""
+        if key and key in _IDEMPOTENCY_KEYS:
+            return self._send(201, _IDEMPOTENCY_KEYS[key])
+        record = dict(body)
+        record['forum_id'] = forum_id
+        stored = children.put(record, owner=self._caller() or "")
+        if key:
+            _IDEMPOTENCY_KEYS[key] = stored
+        return self._send(201, stored)
+
+    def get_threads(self, forum_id, id):
+        """Return a thread in this forum.
+
+        404 when the id was never stored under `forum_id`;
+        403 when the caller is not the record's owner and auth is
+        required.
+        """
+        children = open_store(
+            'threads', RETENTION_DAYS, RECORD_FIELDS, STORE_ATTEMPTS,
+        )
+        record = children.get(id)
+        if record is None:
+            return self._send(404, {"error": "not found"})
+        if str(record.get('forum_id') or "") != str(forum_id):
+            return self._send(404, {"error": "not found"})
+        owner = children.owner_of(id) or ""
+        caller = self._caller()
+        if caller and owner and owner != caller:
+            return self._send(403, {"error": "forbidden"})
+        return self._send(200, record)
+
 
 
 router = APIRouter()
@@ -269,6 +322,21 @@ async def _route_fetch(request: Request, record_id: str):
         return handler._send(401, {"error": "an owner is required"})
     handler._parsed_body = {'id': record_id}
     return await _run(handler, lambda h: h.fetch(record_id))
+
+@router.post('/forums/{forum_id}/threads')
+async def _route_post_threads(request: Request, forum_id: str):
+    handler = Handler(request)
+    if not handler._caller():
+        return handler._send(401, {"error": "an owner is required"})
+    await handler.load_body()
+    return await _run(handler, lambda h: h.post_threads(forum_id))
+
+@router.get('/forums/{forum_id}/threads/{id}')
+async def _route_get_threads(request: Request, forum_id: str, id: str):
+    handler = Handler(request)
+    if not handler._caller():
+        return handler._send(401, {"error": "an owner is required"})
+    return await _run(handler, lambda h: h.get_threads(forum_id, id))
 
     raise HTTPException(status_code=404, detail={"error": "not found"})
 
