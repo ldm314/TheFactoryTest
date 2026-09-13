@@ -20,8 +20,8 @@ PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
-    {"service": 'oauth', "base_path": '/oauth', "routes": [('GET', '^/oauth/authorize/?$', 'flag.f_1288')]},
-    {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.f_1284'), ('GET', '^/oauth/clients/\\{client_id\\}/?$', 'flag.f_1284'), ('POST', '^/oauth/clients/\\{client_id\\}/rotate\\-secret/?$', 'flag.f_1284')]},
+    {"service": 'oauth', "base_path": '/oauth', "routes": [('GET', '^/oauth/authorize/?$', 'flag.f_1288'), ('POST', '^/oauth/token/?$', 'flag.f_1289')]},
+    {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1266'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1266'), ('GET', '^/oauth/clients/\\{client_id\\}/?$', 'flag.f_1284'), ('POST', '^/oauth/clients/\\{client_id\\}/rotate\\-secret/?$', 'flag.f_1284')]},
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)

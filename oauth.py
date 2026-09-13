@@ -24,7 +24,7 @@ FIELD_TYPES = {}
 AMOUNT_ROUNDING = None
 REFERENCES = []
 AUTH_SCHEME = 'plain'
-IDEMPOTENCY_HEADER = 'Idempotency-Key'
+IDEMPOTENCY_HEADER = ''
 
 store = open_store(SERVICE_NAME, RETENTION_DAYS, RECORD_FIELDS, STORE_ATTEMPTS)
 _IDEMPOTENCY_KEYS = {}
@@ -201,7 +201,8 @@ class Handler:
         code = secrets.token_urlsafe(24)
         store.put(
             {"id": code, "code": code, "client_id": client_id,
-             "redirect_uri": redirect_uri},
+             "redirect_uri": redirect_uri,
+             "issued_at": __import__("store").clock.now()},
             owner=self._caller() or '',
         )
         sep = '&' if '?' in redirect_uri else '?'
@@ -212,6 +213,48 @@ class Handler:
             "code": code,
             "authorization_code": code,
             "location": location,
+        })
+
+    def post_token(self):
+        """Exchange an authorization code for an access token.
+
+        Body fields: grant_type=authorization_code, code, and
+        usually redirect_uri / client_id. Unknown, missing, or
+        already-used codes answer 400 with an error field. A match
+        deletes the one-time code and returns 200 with access_token.
+        """
+        body = self._body()
+        if not isinstance(body, dict):
+            body = {}
+        grant = str(body.get('grant_type') or '').strip()
+        code = str(body.get('code') or '').strip()
+        if grant and grant != 'authorization_code':
+            return self._send(400, {"error": "unsupported_grant_type"})
+        if not code:
+            return self._send(400, {"error": "invalid_request"})
+        record = store.get(code)
+        if record is None:
+            for candidate in store.list() or []:
+                if str(candidate.get('code') or '') == code:
+                    record = candidate
+                    break
+        if record is None:
+            return self._send(400, {"error": "invalid_grant"})
+        issued = record.get('issued_at')
+        try:
+            age = __import__('store').clock.now() - float(issued or 0)
+        except (TypeError, ValueError):
+            age = 0
+        if issued is not None and age > 600:
+            store.delete(str(record.get("id") or code))
+            return self._send(400, {"error": "invalid_grant"})
+        rid = str(record.get('id') or code)
+        store.delete(rid)
+        token = secrets.token_urlsafe(32)
+        return self._send(200, {
+            "access_token": token,
+            "token_type": "Bearer",
+            "expires_in": 3600,
         })
 
 
@@ -237,6 +280,12 @@ async def _route_health(request: Request):
 async def _route_get_authorize(request: Request):
     handler = Handler(request)
     return await _run(handler, lambda h: h.get_authorize())
+
+@router.post('/oauth/token')
+async def _route_post_token(request: Request):
+    handler = Handler(request)
+    await handler.load_body()
+    return await _run(handler, lambda h: h.post_token())
 
     raise HTTPException(status_code=404, detail={"error": "not found"})
 
