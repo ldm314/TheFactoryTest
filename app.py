@@ -10,6 +10,7 @@ import flags
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from forums import router as forums_router
 from foundation import router as foundation_router
 from oauth import router as oauth_router
 from oauth_clients import router as oauth_clients_router
@@ -20,6 +21,7 @@ SERVICE_VERSION = "1.0.0"
 PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
+    {"service": 'forums', "base_path": '/forums', "routes": [('POST', '^/forums/?$', 'flag.r_1270'), ('GET', '^/forums/[^/]+/?$', 'flag.r_1270')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
     {"service": 'oauth', "base_path": '/oauth', "routes": [('GET', '^/oauth/authorize/?$', 'flag.f_1288'), ('POST', '^/oauth/token/?$', 'flag.f_1289')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1266'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1266'), ('GET', '^/oauth/clients/\\{client_id\\}/?$', 'flag.f_1284'), ('POST', '^/oauth/clients/\\{client_id\\}/rotate\\-secret/?$', 'flag.f_1284')]},
@@ -27,6 +29,7 @@ COMPONENTS = [
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)
+app.include_router(forums_router)
 app.include_router(foundation_router)
 app.include_router(oauth_router)
 app.include_router(oauth_clients_router)
