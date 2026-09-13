@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS "svc_oauth_clients".records (
     "created_at" timestamptz NOT NULL DEFAULT now(),
     "client_id" text,
     "client_secret" text,
+    "redirect_uri" text,
     "redirect_uris" text,
     "allowed_scopes" text,
     "owner_id" text,
