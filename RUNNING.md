@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `foundation.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `oauth.py` serves `/oauth` — the system shall expose GET /oauth/authorize that issues an authorization code when client_id exists in oauth_clients and redirect_uri matches that client; refuse unknown client_id or non-matching redirect_uri with HTTP 400 including an error field Currently: get_authorize was NotImplementedError; oauth_clients sibling schema missing in isolation
 - `oauth_clients.py` serves `/oauth/clients` — The system shall expose OAuth client registration at /oauth/clients: an authenticated POST /oauth/clients returns HTTP 201 with JSON fields client_id and client_secret; GET /oauth/clients/{client_id} returns HTTP 200 with that client when the id exists, and HTTP 404 when the id does not exist; requests without auth return HTTP 401 Currently: create/readback/absent-id checks failed; clients component must satisfy POST 201 and GET 200/404 only
 
 ## Flags
@@ -37,4 +38,5 @@ per promotion, carrying the work item that caused it.
 
 Currently on:
 
-_none: everything is dark_
+- `flag.f_1284`
+- `flag.r_1266`

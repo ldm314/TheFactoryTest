@@ -11,6 +11,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from foundation import router as foundation_router
+from oauth import router as oauth_router
 from oauth_clients import router as oauth_clients_router
 
 SERVICE_NAME = 'Factory Test 4'
@@ -19,11 +20,13 @@ PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
+    {"service": 'oauth', "base_path": '/oauth', "routes": [('GET', '^/oauth/authorize/?$', 'flag.f_1288')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.f_1284'), ('GET', '^/oauth/clients/\\{client_id\\}/?$', 'flag.f_1284'), ('POST', '^/oauth/clients/\\{client_id\\}/rotate\\-secret/?$', 'flag.f_1284')]},
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)
 app.include_router(foundation_router)
+app.include_router(oauth_router)
 app.include_router(oauth_clients_router)
 
 
