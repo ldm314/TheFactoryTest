@@ -43,8 +43,11 @@ Currently on:
 
 - `flag.f_1284`
 - `flag.f_1288`
+- `flag.f_1289`
 - `flag.f_1290`
 - `flag.f_1294`
+- `flag.f_1296`
+- `flag.r_1265`
 - `flag.r_1266`
 - `flag.r_1269`
 - `flag.r_1270`

@@ -22,7 +22,7 @@ SERVICE_VERSION = "1.0.0"
 PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
-    {"service": 'forums', "base_path": '/forums', "routes": [('POST', '^/forums/?$', 'flag.r_1270'), ('GET', '^/forums/[^/]+/?$', 'flag.r_1270'), ('POST', '^/forums/[^/]+/threads/?$', 'flag.f_1294'), ('GET', '^/forums/[^/]+/threads/[^/]+/?$', 'flag.f_1294')]},
+    {"service": 'forums', "base_path": '/forums', "routes": [('POST', '^/forums/?$', 'flag.r_1270'), ('GET', '^/forums/[^/]+/?$', 'flag.r_1270'), ('POST', '^/forums/[^/]+/threads/?$', 'flag.f_1291'), ('GET', '^/forums/[^/]+/threads/[^/]+/?$', 'flag.f_1291')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
     {"service": 'oauth', "base_path": '/oauth', "routes": [('GET', '^/oauth/authorize/?$', 'flag.f_1288'), ('POST', '^/oauth/token/?$', 'flag.f_1289')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1266'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1266'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.f_1284'), ('POST', '^/oauth/clients/[^/]+/rotate\\-secret/?$', 'flag.f_1284')]},
