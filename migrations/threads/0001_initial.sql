@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS "svc_threads".records (
     "created_at" timestamptz NOT NULL DEFAULT now(),
     "title" text,
     "description" text,
+    "thread" text,
     "forum_id" text
 );
 
