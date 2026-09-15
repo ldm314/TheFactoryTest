@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `oauth_clients/__init__.py` serves `/oauth/clients` — the system shall register OAuth clients with a client_id and client_secret and refuse unknown clients
 - `runnables/__init__.py` serves `/runnables` — the system shall accept and store runnable configuration via POST /runnables
 
 ## Flags
