@@ -10,9 +10,9 @@ See `RUNNING.md` for how to start it.
 
 `python-fastapi-postgres@1` — FastAPI + uvicorn, PostgreSQL per service (default greenfield).
 
-- one module per component, named for the resource it serves
+- one package per component: `{service}/__init__.py` named for the resource it serves
 - a FastAPI APIRouter named `router` and handler methods on Handler
 - JSON in and JSON out; the plumbing is provided and not to be changed
-- records go through store.put/get/list; store.py is provided
+- records go through store.put/get/list; store.py is provided at the workroot
 - each service owns one database schema and touches no other (D-30)
 - the schema arrives as numbered files in migrations/<service>/
