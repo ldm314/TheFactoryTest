@@ -2,6 +2,11 @@
   "base_image": "python:3.12-slim",
   "components": [
     {
+      "name": "base64",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "datetime",
       "source": "stdlib",
       "version": "3.12"
@@ -15,6 +20,16 @@
       "name": "fastapi",
       "source": "image",
       "version": "0.115.6"
+    },
+    {
+      "name": "hashlib",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "hmac",
+      "source": "stdlib",
+      "version": "3.12"
     },
     {
       "name": "json",
@@ -42,6 +57,11 @@
       "version": "3.12"
     },
     {
+      "name": "secrets",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "threading",
       "source": "stdlib",
       "version": "3.12"
@@ -57,6 +77,6 @@
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:3a38a4bacf590ba25222a6451d63f1f37e31c0da1e7f44c4d0478b3df43b123c",
+  "digest": "sha256:30dac77b2e3e97e8dee0f185363b247eca53cbb6bf01c35226cf793ea04f46d2",
   "python": "3.12"
 }

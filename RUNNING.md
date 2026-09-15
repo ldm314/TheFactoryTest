@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `oauth/__init__.py` serves `/oauth` — Expected: Keep token path and type as code constants; suppress static security warnings (Simplest implementation; accepts advisory warning as acceptable for non-sensitive constant metadata); Other adjustments or clarifications: CRITICAL package isolation: implement POST /oauth/token only in oauth_token/__init__.py (SERVICE_NAME=oauth_token). Do not modify or replace oauth/__init__.py — GET /oauth/authorize from W-1259 must keep working. Do not invent GET /oauth/health or any /oauth/health handler. TOKEN_PATH and TOKEN_TYPE may stay as plain code constants. Currently: Checks that failed: security.static: warning (advisory, not blocking): oauth2_authorization_code.py:8:14: S105 Possible hardcoded password a — repair stalled after 1 cycle(s): the same checks failed identically
 - `oauth_clients/__init__.py` serves `/oauth/clients` — the system shall register OAuth clients with a client_id and client_secret and refuse unknown clients
 - `runnables/__init__.py` serves `/runnables` — the system shall accept and store runnable configuration via POST /runnables
 
