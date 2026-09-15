@@ -14,7 +14,13 @@ CREATE TABLE IF NOT EXISTS "svc_oauth_clients".records (
     "body" jsonb NOT NULL,
     "created_at" timestamptz NOT NULL DEFAULT now(),
     "client_id" text,
-    "client_secret" text
+    "client_secret" text,
+    "redirect_uri" text,
+    "redirect_uris" text,
+    "allowed_scopes" text,
+    "owner_id" text,
+    "created_by" text,
+    "description" text
 );
 
 CREATE INDEX IF NOT EXISTS records_owner_idx
