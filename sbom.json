@@ -2,11 +2,6 @@
   "base_image": "python:3.12-slim",
   "components": [
     {
-      "name": "base64",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
       "name": "datetime",
       "source": "stdlib",
       "version": "3.12"
@@ -20,16 +15,6 @@
       "name": "fastapi",
       "source": "image",
       "version": "0.115.6"
-    },
-    {
-      "name": "hashlib",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
-      "name": "hmac",
-      "source": "stdlib",
-      "version": "3.12"
     },
     {
       "name": "json",
@@ -77,6 +62,6 @@
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:30dac77b2e3e97e8dee0f185363b247eca53cbb6bf01c35226cf793ea04f46d2",
+  "digest": "sha256:40d1bb600315523725896a3fac71df60fb2df40455480bfbd86c4f1a9ab6ed7a",
   "python": "3.12"
 }

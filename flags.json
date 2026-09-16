@@ -1,3 +1,9 @@
 {
-  "flags": {}
+  "flags": {
+    "flag.f_1313": false,
+    "flag.r_1300": false,
+    "flag.r_1301": false,
+    "flag.r_1302": false,
+    "flag.r_1303": false
+  }
 }
