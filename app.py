@@ -14,6 +14,7 @@ from foundation import router as foundation_router
 from oauth import router as oauth_router
 from oauth_clients import router as oauth_clients_router
 from runnables import router as runnables_router
+from users import router as users_router
 
 SERVICE_NAME = 'Factory Test 4'
 SERVICE_VERSION = "1.0.0"
@@ -24,6 +25,7 @@ COMPONENTS = [
     {"service": 'oauth', "base_path": '/oauth', "routes": [('GET', '^/oauth/authorize/?$', 'flag.r_1303'), ('GET', '^/oauth/health/?$', 'flag.f_1313'), ('POST', '^/oauth/token/?$', 'flag.f_1313')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1302'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1302')]},
     {"service": 'runnables', "base_path": '/runnables', "routes": [('POST', '^/runnables/?$', 'flag.r_1301'), ('GET', '^/runnables/[^/]+/?$', 'flag.r_1301')]},
+    {"service": 'users', "base_path": '/users', "routes": [('POST', '^/users/?$', 'flag.f_1316'), ('GET', '^/users/[^/]+/?$', 'flag.f_1316')]},
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)
@@ -31,6 +33,7 @@ app.include_router(foundation_router)
 app.include_router(oauth_router)
 app.include_router(oauth_clients_router)
 app.include_router(runnables_router)
+app.include_router(users_router)
 
 
 @app.get("/health")
