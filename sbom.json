@@ -42,6 +42,11 @@
       "version": "3.12"
     },
     {
+      "name": "secrets",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "threading",
       "source": "stdlib",
       "version": "3.12"
@@ -57,6 +62,6 @@
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:b2d19fdf2667b254c9868abc123d6e7c4c35f305beed7b11cd977c6955df26f5",
+  "digest": "sha256:a3b0c626c6e725e9be4f2891b57f84af28c5256e8b49fdee6e8275cbebaba942",
   "python": "3.12"
 }
