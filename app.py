@@ -11,6 +11,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from foundation import router as foundation_router
+from oauth_clients import router as oauth_clients_router
 
 SERVICE_NAME = 'Factory Test 4'
 SERVICE_VERSION = "1.0.0"
@@ -18,10 +19,12 @@ PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
+    {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1328'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1328'), ('PATCH', '^/oauth/clients/[^/]+/rotate\\-secret/?$', 'flag.r_1328')]},
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)
 app.include_router(foundation_router)
+app.include_router(oauth_clients_router)
 
 
 @app.get("/health")
