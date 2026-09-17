@@ -25,6 +25,8 @@ them and reports which flags are on.
 ## Components
 
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `oauth_authorize/__init__.py` serves `/oauth` — the system shall return an authorization code and state parameter in the response when a registered client requests approval and the resource owner has granted consent; operator drive: proceed with greenfield defaults
+- `oauth_clients/__init__.py` serves `/oauth/clients` — the system shall register OAuth clients with a client id and secret, support administrator-initiated credential rotation, and refuse unknown clients
 
 ## Flags
 
@@ -36,4 +38,5 @@ per promotion, carrying the work item that caused it.
 
 Currently on:
 
-_none: everything is dark_
+- `flag.r_1322`
+- `flag.r_1328`
