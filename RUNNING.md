@@ -28,6 +28,7 @@ them and reports which flags are on.
 - `oauth_authorize/__init__.py` serves `/oauth` — the system shall return an authorization code and state parameter in the response when a registered client requests approval and the resource owner has granted consent; operator drive: proceed with greenfield defaults
 - `oauth_token/__init__.py` serves `/oauth` — the system shall exchange a valid authorization code for an access token and refuse invalid codes
 - `oauth_clients/__init__.py` serves `/oauth/clients` — the system shall register OAuth clients with a client id and secret, support administrator-initiated credential rotation, and refuse unknown clients
+- `users/__init__.py` serves `/users` — the system shall store a user with an email and return the user by id
 
 ## Flags
 
@@ -42,3 +43,4 @@ Currently on:
 - `flag.r_1322`
 - `flag.r_1328`
 - `flag.r_1329`
+- `flag.r_1330`
