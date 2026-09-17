@@ -24,6 +24,8 @@ them and reports which flags are on.
 
 ## Components
 
+- `threads/__init__.py` serves `/forums` — the system shall store a thread nested under a forum and return the thread by id
+- `forums/__init__.py` serves `/forums` — the system shall store a forum with a title and description and return the forum by id
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
 - `oauth_authorize/__init__.py` serves `/oauth` — the system shall return an authorization code and state parameter in the response when a registered client requests approval and the resource owner has granted consent; operator drive: proceed with greenfield defaults
 - `oauth_token/__init__.py` serves `/oauth` — the system shall exchange a valid authorization code for an access token and refuse invalid codes
@@ -41,6 +43,8 @@ per promotion, carrying the work item that caused it.
 Currently on:
 
 - `flag.r_1322`
+- `flag.r_1325`
 - `flag.r_1328`
 - `flag.r_1329`
 - `flag.r_1330`
+- `flag.r_1331`

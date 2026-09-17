@@ -10,6 +10,8 @@ import flags
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from threads import router as threads_router
+from forums import router as forums_router
 from foundation import router as foundation_router
 from oauth_authorize import router as oauth_authorize_router
 from oauth_token import router as oauth_token_router
@@ -21,6 +23,8 @@ SERVICE_VERSION = "1.0.0"
 PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
+    {"service": 'threads', "base_path": '/forums', "routes": [('POST', '^/forums/[^/]+/threads/?$', 'flag.r_1326'), ('GET', '^/forums/[^/]+/threads/[^/]+/?$', 'flag.r_1326')]},
+    {"service": 'forums', "base_path": '/forums', "routes": [('POST', '^/forums/?$', 'flag.r_1325'), ('GET', '^/forums/[^/]+/?$', 'flag.r_1325')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
     {"service": 'oauth_authorize', "base_path": '/oauth', "routes": [('POST', '^/oauth/authorize/?$', 'flag.r_1329')]},
     {"service": 'oauth_token', "base_path": '/oauth', "routes": [('POST', '^/oauth/token/?$', 'flag.r_1331')]},
@@ -29,6 +33,8 @@ COMPONENTS = [
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)
+app.include_router(threads_router)
+app.include_router(forums_router)
 app.include_router(foundation_router)
 app.include_router(oauth_authorize_router)
 app.include_router(oauth_token_router)
