@@ -13,6 +13,7 @@ from fastapi.responses import JSONResponse
 from forums import router as forums_router
 from foundation import router as foundation_router
 from oauth_clients import router as oauth_clients_router
+from posts import router as posts_router
 from users import router as users_router
 
 SERVICE_NAME = 'Factory Test 4'
@@ -23,6 +24,7 @@ COMPONENTS = [
     {"service": 'forums', "base_path": '/forums', "routes": [('POST', '^/forums/?$', 'flag.r_1373'), ('GET', '^/forums/[^/]+/?$', 'flag.r_1373')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1369'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1369')]},
+    {"service": 'posts', "base_path": '/threads', "routes": [('POST', '^/threads/[^/]+/posts/?$', 'flag.r_1375'), ('GET', '^/threads/[^/]+/posts/[^/]+/?$', 'flag.r_1375')]},
     {"service": 'users', "base_path": '/users', "routes": [('POST', '^/users/?$', 'flag.r_1372'), ('GET', '^/users/[^/]+/?$', 'flag.r_1372')]},
 ]
 
@@ -44,6 +46,7 @@ async def application_health():
 app.include_router(forums_router)
 app.include_router(foundation_router)
 app.include_router(oauth_clients_router)
+app.include_router(posts_router)
 app.include_router(users_router)
 
 
