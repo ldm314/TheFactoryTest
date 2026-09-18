@@ -14,6 +14,7 @@ from threads import router as threads_router
 from forums import router as forums_router
 from foundation import router as foundation_router
 from oauth_clients import router as oauth_clients_router
+from posts import router as posts_router
 from users import router as users_router
 
 SERVICE_NAME = 'Factory Test 4'
@@ -25,6 +26,7 @@ COMPONENTS = [
     {"service": 'forums', "base_path": '/forums', "routes": [('POST', '^/forums/?$', 'flag.r_1364'), ('GET', '^/forums/[^/]+/?$', 'flag.r_1364')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1360'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1360')]},
+    {"service": 'posts', "base_path": '/threads', "routes": [('POST', '^/threads/[^/]+/posts/?$', 'flag.r_1366'), ('GET', '^/threads/[^/]+/posts/[^/]+/?$', 'flag.r_1366')]},
     {"service": 'users', "base_path": '/users', "routes": [('POST', '^/users/?$', 'flag.r_1363'), ('GET', '^/users/[^/]+/?$', 'flag.r_1363')]},
 ]
 
@@ -33,6 +35,7 @@ app.include_router(threads_router)
 app.include_router(forums_router)
 app.include_router(foundation_router)
 app.include_router(oauth_clients_router)
+app.include_router(posts_router)
 app.include_router(users_router)
 
 
