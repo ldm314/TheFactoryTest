@@ -10,9 +10,10 @@ import flags
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from threads import router as threads_router
 from forums import router as forums_router
+from threads import router as threads_router
 from foundation import router as foundation_router
+from oauth import router as oauth_router
 from oauth_clients import router as oauth_clients_router
 from posts import router as posts_router
 from users import router as users_router
@@ -22,18 +23,20 @@ SERVICE_VERSION = "1.0.0"
 PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
-    {"service": 'threads', "base_path": '/forums', "routes": [('POST', '^/forums/[^/]+/threads/?$', 'flag.r_1365'), ('GET', '^/forums/[^/]+/threads/[^/]+/?$', 'flag.r_1365')]},
     {"service": 'forums', "base_path": '/forums', "routes": [('POST', '^/forums/?$', 'flag.r_1364'), ('GET', '^/forums/[^/]+/?$', 'flag.r_1364')]},
+    {"service": 'threads', "base_path": '/forums', "routes": [('POST', '^/forums/[^/]+/threads/?$', 'flag.r_1365'), ('GET', '^/forums/[^/]+/threads/[^/]+/?$', 'flag.r_1365')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
+    {"service": 'oauth', "base_path": '/oauth', "routes": [('GET', '^/oauth/authorize/?$', 'flag.r_1361'), ('POST', '^/oauth/token/?$', 'flag.r_1361')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1360'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1360')]},
     {"service": 'posts', "base_path": '/threads', "routes": [('POST', '^/threads/[^/]+/posts/?$', 'flag.r_1366'), ('GET', '^/threads/[^/]+/posts/[^/]+/?$', 'flag.r_1366')]},
     {"service": 'users', "base_path": '/users', "routes": [('POST', '^/users/?$', 'flag.r_1363'), ('GET', '^/users/[^/]+/?$', 'flag.r_1363')]},
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)
-app.include_router(threads_router)
 app.include_router(forums_router)
+app.include_router(threads_router)
 app.include_router(foundation_router)
+app.include_router(oauth_router)
 app.include_router(oauth_clients_router)
 app.include_router(posts_router)
 app.include_router(users_router)
