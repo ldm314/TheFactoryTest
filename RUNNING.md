@@ -27,6 +27,7 @@ them and reports which flags are on.
 - `forums/__init__.py` serves `/forums` — the system shall store a forum with a title and return the forum by id
 - `threads/__init__.py` serves `/forums` — the system shall store a thread in a forum and return the thread by id
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `oauth_token/__init__.py` serves `/oauth` — the system shall exchange a valid authorization code for an access token and refuse invalid codes
 - `oauth/__init__.py` serves `/oauth` — the system shall issue an authorization code for a registered client after the resource owner approves
 - `oauth_clients/__init__.py` serves `/oauth/clients` — the system shall register OAuth clients with a client id and secret and return the client by id
 - `posts/__init__.py` serves `/threads` — the system shall store a post in a thread and return the post by id
@@ -44,6 +45,7 @@ Currently on:
 
 - `flag.r_1359`
 - `flag.r_1360`
+- `flag.r_1361`
 - `flag.r_1363`
 - `flag.r_1364`
 - `flag.r_1365`
