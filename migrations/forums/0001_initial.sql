@@ -13,7 +13,9 @@ CREATE TABLE IF NOT EXISTS "svc_forums".records (
     "owner" text NOT NULL DEFAULT '',
     "body" jsonb NOT NULL,
     "created_at" timestamptz NOT NULL DEFAULT now(),
-    "title" text
+    "title" text,
+    "content" text,
+    "thread" text
 );
 
 CREATE INDEX IF NOT EXISTS records_owner_idx
