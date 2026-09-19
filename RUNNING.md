@@ -24,9 +24,12 @@ them and reports which flags are on.
 
 ## Components
 
+- `forums/__init__.py` serves `/forums` — the system shall store a forum with a title and return the forum by id
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
 - `oauth_authorize/__init__.py` serves `/oauth` — the system shall issue an authorization code for a registered client after the resource owner approves
+- `oauth_token/__init__.py` serves `/oauth` — the system shall exchange a valid authorization code for an access token and refuse invalid codes
 - `oauth_clients/__init__.py` serves `/oauth/clients` — the system shall register OAuth clients with a client id and secret and return the client by id
+- `users/__init__.py` serves `/users` — the system shall store a user with an email and return the user by id
 
 ## Flags
 
@@ -40,3 +43,7 @@ Currently on:
 
 - `flag.r_1386`
 - `flag.r_1387`
+- `flag.r_1388`
+- `flag.r_1389`
+- `flag.r_1390`
+- `flag.r_1391`
