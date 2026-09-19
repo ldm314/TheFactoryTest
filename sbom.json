@@ -2,11 +2,6 @@
   "base_image": "python:3.12-slim",
   "components": [
     {
-      "name": "dataclasses",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
       "name": "datetime",
       "source": "stdlib",
       "version": "3.12"
@@ -72,6 +67,6 @@
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:f3fe1a0dcc718f7f0d4e9787e5e9ffda950dae5ab10e49df7cff997dd223168c",
+  "digest": "sha256:816df240bb60f6067b49a82f7541e64083989fea7721679403724affec1c2206",
   "python": "3.12"
 }
