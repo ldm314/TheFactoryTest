@@ -12,6 +12,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from foundation import router as foundation_router
 from oauth_clients import router as oauth_clients_router
+from users import router as users_router
 
 SERVICE_NAME = 'Factory Test 4'
 SERVICE_VERSION = "1.0.0"
@@ -20,6 +21,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 COMPONENTS = [
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1387'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1387')]},
+    {"service": 'users', "base_path": '/users', "routes": [('POST', '^/users/?$', 'flag.r_1390'), ('GET', '^/users/[^/]+/?$', 'flag.r_1390')]},
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)
@@ -39,6 +41,7 @@ async def application_health():
 # the application one (W-1313: forums /health won and hid the real surface).
 app.include_router(foundation_router)
 app.include_router(oauth_clients_router)
+app.include_router(users_router)
 
 
 @app.middleware("http")
