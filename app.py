@@ -12,6 +12,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from forums import router as forums_router
 from foundation import router as foundation_router
+from oauth_token import router as oauth_token_router
 from oauth import router as oauth_router
 from oauth_clients import router as oauth_clients_router
 from posts import router as posts_router
@@ -22,8 +23,9 @@ SERVICE_VERSION = "1.0.0"
 PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
-    {"service": 'forums', "base_path": '/forums', "routes": [('POST', '^/forums/?$', 'flag.r_1374'), ('GET', '^/forums/[^/]+/?$', 'flag.r_1374')]},
+    {"service": 'forums', "base_path": '/forums', "routes": [('POST', '^/forums/?$', 'flag.r_1373'), ('GET', '^/forums/[^/]+/?$', 'flag.r_1373')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
+    {"service": 'oauth_token', "base_path": '/oauth', "routes": [('POST', '^/oauth/token/?$', 'flag.f_1384')]},
     {"service": 'oauth', "base_path": '/oauth', "routes": [('POST', '^/oauth/token/?$', 'flag.f_1384'), ('POST', '^/oauth/authorize/?$', 'flag.f_1384')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1369'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1369')]},
     {"service": 'posts', "base_path": '/threads', "routes": [('POST', '^/threads/[^/]+/posts/?$', 'flag.r_1375'), ('GET', '^/threads/[^/]+/posts/[^/]+/?$', 'flag.r_1375')]},
@@ -47,6 +49,7 @@ async def application_health():
 # the application one (W-1313: forums /health won and hid the real surface).
 app.include_router(forums_router)
 app.include_router(foundation_router)
+app.include_router(oauth_token_router)
 app.include_router(oauth_router)
 app.include_router(oauth_clients_router)
 app.include_router(posts_router)
