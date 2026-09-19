@@ -12,10 +12,7 @@ CREATE TABLE IF NOT EXISTS "svc_threads".records (
     "id" text PRIMARY KEY,
     "owner" text NOT NULL DEFAULT '',
     "body" jsonb NOT NULL,
-    "created_at" timestamptz NOT NULL DEFAULT now(),
-    "title" text,
-    "content" text,
-    "forum_id" text
+    "created_at" timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE INDEX IF NOT EXISTS records_owner_idx
