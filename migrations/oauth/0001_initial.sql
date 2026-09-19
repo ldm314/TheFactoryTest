@@ -1,14 +1,14 @@
--- threads: initial schema, derived from the requirement (docs/11 §4).
+-- oauth: initial schema, derived from the requirement (docs/11 §4).
 --
 -- Expand-phase and additive: every statement is IF NOT EXISTS, so re-applying
 -- this file to a database already at this version changes nothing. That is not
 -- politeness — it is the property the migration check measures.
 
-CREATE SCHEMA IF NOT EXISTS "svc_threads";
+CREATE SCHEMA IF NOT EXISTS "svc_oauth";
 
-CREATE SEQUENCE IF NOT EXISTS "svc_threads".record_id AS bigint START 1;
+CREATE SEQUENCE IF NOT EXISTS "svc_oauth".record_id AS bigint START 1;
 
-CREATE TABLE IF NOT EXISTS "svc_threads".records (
+CREATE TABLE IF NOT EXISTS "svc_oauth".records (
     "id" text PRIMARY KEY,
     "owner" text NOT NULL DEFAULT '',
     "body" jsonb NOT NULL,
@@ -16,4 +16,4 @@ CREATE TABLE IF NOT EXISTS "svc_threads".records (
 );
 
 CREATE INDEX IF NOT EXISTS records_owner_idx
-    ON "svc_threads".records (owner);
+    ON "svc_oauth".records (owner);

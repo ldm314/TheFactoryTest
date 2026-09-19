@@ -24,8 +24,9 @@ them and reports which flags are on.
 
 ## Components
 
-- `forums/__init__.py` serves `/forums` — the system shall store a thread in a forum and return the thread by id
+- `forums/__init__.py` serves `/forums` — the system shall store a forum with a title and return the forum by id
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `oauth/__init__.py` serves `/oauth` — Expected: Defer scope validation: Accept expired and reused code rejection; defer detailed scope validation to token exchange (POST /oauth/token) instead of code issuance. (Authorization code endpoint returns 201 if code is valid and unused; scope mismatch caught at token exchange. Simplifies code issuance, moves validation downstream.); If none of the above fit, describe the adjustment you'd prefer: operator drive: proceed with greenfield defaults Currently: Behaviours that did not hold: Scenario: An expired authorization code is refused (POST /oauth/authorization-code); Scenario: A reused authorization code is refused (POST /oauth/authorization-code); Scenario: Invalid scope is rejected on issuance — convergence budget of 3 cycle(s) exhausted after 1 cycle(s)
 - `oauth_clients/__init__.py` serves `/oauth/clients` — the system shall register OAuth clients with a client id and secret and return the client by id
 - `posts/__init__.py` serves `/threads` — the system shall store a post in a thread and return the post by id
 - `users/__init__.py` serves `/users` — the system shall store a user with an email and return the user by id
@@ -45,3 +46,4 @@ Currently on:
 - `flag.r_1372`
 - `flag.r_1373`
 - `flag.r_1374`
+- `flag.r_1375`
