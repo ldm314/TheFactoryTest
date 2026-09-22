@@ -17,6 +17,11 @@
       "version": "0.115.6"
     },
     {
+      "name": "hashlib",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "json",
       "source": "stdlib",
       "version": "3.12"
@@ -42,6 +47,11 @@
       "version": "3.12"
     },
     {
+      "name": "secrets",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "threading",
       "source": "stdlib",
       "version": "3.12"
@@ -57,6 +67,6 @@
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:cc099a13d9f9294d059255139be7e54d0a5825db56ff4c69d229b714ac5bb505",
+  "digest": "sha256:665e671e717d08198202e52846a81f2a7067cdf8ec7fcd11e122af2067b66ba0",
   "python": "3.12"
 }
