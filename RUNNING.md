@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `users/__init__.py` serves `/users` — the system shall store a user with an email and return the user by id
 
 ## Flags
 
