@@ -2,6 +2,11 @@
   "base_image": "python:3.12-slim",
   "components": [
     {
+      "name": "__future__",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "datetime",
       "source": "stdlib",
       "version": "3.12"
@@ -52,11 +57,16 @@
       "version": "3.12"
     },
     {
+      "name": "typing",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "uvicorn",
       "source": "image",
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:0a00946381ea87736115a71c0605bb869223aaa3166b7863a42c060ba405032b",
+  "digest": "sha256:95011b107ac97cd1ab372da25d42efbdbe57abae74a5a3057a50f903d017cf51",
   "python": "3.12"
 }
