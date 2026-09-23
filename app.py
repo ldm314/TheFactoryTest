@@ -11,6 +11,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from foundation import router as foundation_router
+from oauth_clients import router as oauth_clients_router
 from users import router as users_router
 
 SERVICE_NAME = 'Factory Test Live'
@@ -19,6 +20,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
+    {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1434'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1434')]},
     {"service": 'users', "base_path": '/users', "routes": [('POST', '^/users/?$', 'flag.r_1437'), ('GET', '^/users/[^/]+/?$', 'flag.r_1437')]},
 ]
 
@@ -38,6 +40,7 @@ async def application_health():
 # Component routers after /health so a component's own /health does not shadow
 # the application one (W-1313: forums /health won and hid the real surface).
 app.include_router(foundation_router)
+app.include_router(oauth_clients_router)
 app.include_router(users_router)
 
 
