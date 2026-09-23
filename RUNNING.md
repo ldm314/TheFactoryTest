@@ -24,6 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
+- `drops_cleanup/__init__.py` serves `/drops` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Checks that failed: lint.static: domains/__init__.py:236:39: F821 Undefined name `hashlib`; domains/__init__.py:242:15: F821 Undefined name ; lint.style: domains/__init__.py:12:26: F401 `domains.events` imported but unused; consider removing, adding to `__all__` — repair stalled after 1 cycle(s): the same checks failed identically
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
 - `webhooks/__init__.py` serves `/webhooks` — the system shall accept inbound webhooks at POST /webhooks, verify an HMAC signature when X-Signature is present, store the event, and acknowledge with 201
 
@@ -38,3 +39,4 @@ per promotion, carrying the work item that caused it.
 Currently on:
 
 - `flag.r_1407`
+- `flag.r_1408`
