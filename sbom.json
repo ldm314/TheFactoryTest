@@ -7,6 +7,11 @@
       "version": "3.12"
     },
     {
+      "name": "base64",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "datetime",
       "source": "stdlib",
       "version": "3.12"
@@ -22,7 +27,17 @@
       "version": "0.115.6"
     },
     {
+      "name": "hashlib",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "json",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "logging",
       "source": "stdlib",
       "version": "3.12"
     },
@@ -67,6 +82,6 @@
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:95011b107ac97cd1ab372da25d42efbdbe57abae74a5a3057a50f903d017cf51",
+  "digest": "sha256:f5e01b69a00da048ce6d29fe6013b1f8200ffc887738a8e289f7055ba209708a",
   "python": "3.12"
 }

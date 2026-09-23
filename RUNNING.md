@@ -24,6 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
+- `domains/__init__.py` serves `/domains` — the system shall record a domain event when a write succeeds and make that event available to subscribers
 - `drops_cleanup/__init__.py` serves `/drops` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Checks that failed: lint.static: domains/__init__.py:236:39: F821 Undefined name `hashlib`; domains/__init__.py:242:15: F821 Undefined name ; lint.style: domains/__init__.py:12:26: F401 `domains.events` imported but unused; consider removing, adding to `__all__` — repair stalled after 1 cycle(s): the same checks failed identically
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
 - `notifications_stream/__init__.py` serves `/notifications` — the system shall stream accepted events to HTTP clients as Server-Sent Events at GET /notifications/stream
@@ -42,3 +43,4 @@ Currently on:
 - `flag.f_1428`
 - `flag.r_1407`
 - `flag.r_1408`
+- `flag.r_1414`
