@@ -10,6 +10,7 @@ import flags
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from domains import router as domains_router
 from drops_cleanup import router as drops_cleanup_router
 from foundation import router as foundation_router
 from notifications_stream import router as notifications_stream_router
@@ -20,6 +21,7 @@ SERVICE_VERSION = "1.0.0"
 PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
+    {"service": 'domains', "base_path": '/domains', "routes": [('POST', '^/domains/events/?$', 'flag.r_1410'), ('GET', '^/domains/events/[^/]+/?$', 'flag.r_1410'), ('GET', '^/domains/events/?$', 'flag.r_1410')]},
     {"service": 'drops_cleanup', "base_path": '/drops', "routes": [('POST', '^/drops/cleanup/?$', 'flag.f_1428')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
     {"service": 'notifications_stream', "base_path": '/notifications', "routes": [('GET', '^/notifications/stream/?$', 'flag.r_1414')]},
@@ -41,6 +43,7 @@ async def application_health():
 
 # Component routers after /health so a component's own /health does not shadow
 # the application one (W-1313: forums /health won and hid the real surface).
+app.include_router(domains_router)
 app.include_router(drops_cleanup_router)
 app.include_router(foundation_router)
 app.include_router(notifications_stream_router)
