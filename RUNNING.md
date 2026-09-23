@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `webhooks/__init__.py` serves `/webhooks` — the system shall accept inbound webhooks at POST /webhooks, verify an HMAC signature when X-Signature is present, store the event, and acknowledge with 201
 
 ## Flags
 
@@ -36,4 +37,4 @@ per promotion, carrying the work item that caused it.
 
 Currently on:
 
-_none: everything is dark_
+- `flag.r_1407`

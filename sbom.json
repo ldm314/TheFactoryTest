@@ -22,6 +22,11 @@
       "version": "3.12"
     },
     {
+      "name": "hmac",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "json",
       "source": "stdlib",
       "version": "3.12"
@@ -67,6 +72,6 @@
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:665e671e717d08198202e52846a81f2a7067cdf8ec7fcd11e122af2067b66ba0",
+  "digest": "sha256:1d32b948dab8d2e6d4dd09b5f916ef1bd670d76d267921b0e6d6cacc9724767a",
   "python": "3.12"
 }
