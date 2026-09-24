@@ -14,6 +14,7 @@ from foundation import router as foundation_router
 from oauth_token import router as oauth_token_router
 from oauth_clients import router as oauth_clients_router
 from users import router as users_router
+from webhooks import router as webhooks_router
 
 SERVICE_NAME = 'Factory Test Live'
 SERVICE_VERSION = "1.0.0"
@@ -24,6 +25,7 @@ COMPONENTS = [
     {"service": 'oauth_token', "base_path": '/oauth', "routes": [('POST', '^/oauth/token/?$', 'flag.f_1448')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1434'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1434')]},
     {"service": 'users', "base_path": '/users', "routes": [('POST', '^/users/?$', 'flag.r_1437'), ('GET', '^/users/[^/]+/?$', 'flag.r_1437')]},
+    {"service": 'webhooks', "base_path": '/webhooks', "routes": [('POST', '^/webhooks/?$', 'flag.r_1438'), ('GET', '^/webhooks/[^/]+/?$', 'flag.r_1438'), ('GET', '^/webhooks/?$', 'flag.r_1438')]},
 ]
 
 app = FastAPI(title=SERVICE_NAME, version=SERVICE_VERSION)
@@ -45,6 +47,7 @@ app.include_router(foundation_router)
 app.include_router(oauth_token_router)
 app.include_router(oauth_clients_router)
 app.include_router(users_router)
+app.include_router(webhooks_router)
 
 
 @app.middleware("http")
