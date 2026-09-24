@@ -28,6 +28,7 @@ them and reports which flags are on.
 - `oauth_token/__init__.py` serves `/oauth` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Checks that failed: security.static: warning (advisory, not blocking): oauth2_authorization_code.py:8:14: S105 Possible hardcoded password a — repair stalled after 1 cycle(s): the same checks failed identically
 - `oauth_clients/__init__.py` serves `/oauth/clients` — the system shall register OAuth clients with a client id and secret and return the client by id
 - `users/__init__.py` serves `/users` — the system shall store a user with an email and return the user by id
+- `webhooks/__init__.py` serves `/webhooks` — the system shall store webhook events in PostgreSQL with schema and indexing for later query and retrieval
 
 ## Flags
 
@@ -39,4 +40,8 @@ per promotion, carrying the work item that caused it.
 
 Currently on:
 
+- `flag.f_1448`
 - `flag.r_1433`
+- `flag.r_1434`
+- `flag.r_1436`
+- `flag.r_1437`
