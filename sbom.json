@@ -17,16 +17,6 @@
       "version": "0.115.6"
     },
     {
-      "name": "hashlib",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
-      "name": "hmac",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
       "name": "json",
       "source": "stdlib",
       "version": "3.12"
@@ -52,11 +42,6 @@
       "version": "3.12"
     },
     {
-      "name": "secrets",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
       "name": "threading",
       "source": "stdlib",
       "version": "3.12"
@@ -72,6 +57,6 @@
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:3bf6d01dbac18344c9b6c3e1333e449c9e42b5dbf71bb0c95155f78a8875267a",
+  "digest": "sha256:490ba21755c763f74527c0a5b793c9a078bd322106dde021eef732dd00311499",
   "python": "3.12"
 }

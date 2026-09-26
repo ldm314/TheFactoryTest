@@ -10,6 +10,7 @@ import flags
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from drops import router as drops_router
 from foundation import router as foundation_router
 from oauth_token import router as oauth_token_router
 from oauth_clients import router as oauth_clients_router
@@ -21,6 +22,7 @@ SERVICE_VERSION = "1.0.0"
 PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
+    {"service": 'drops', "base_path": '/drops', "routes": [('DELETE', '^/drops/[^/]+/?$', 'flag.f_1467')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
     {"service": 'oauth_token', "base_path": '/oauth', "routes": [('POST', '^/oauth/token/?$', 'flag.f_1448')]},
     {"service": 'oauth_clients', "base_path": '/oauth/clients', "routes": [('POST', '^/oauth/clients/?$', 'flag.r_1434'), ('GET', '^/oauth/clients/[^/]+/?$', 'flag.r_1434')]},
@@ -43,6 +45,7 @@ async def application_health():
 
 # Component routers after /health so a component's own /health does not shadow
 # the application one (W-1313: forums /health won and hid the real surface).
+app.include_router(drops_router)
 app.include_router(foundation_router)
 app.include_router(oauth_token_router)
 app.include_router(oauth_clients_router)

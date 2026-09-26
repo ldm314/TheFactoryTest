@@ -24,6 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
+- `drops/__init__.py` serves `/drops` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Checks that failed: lint.static: posts/__init__.py:243:15: F821 Undefined name `datetime`; lint.style: _draft.py:1:8: F401 [*] `pathlib` imported but unused — repair stalled after 1 cycle(s): the same checks failed identically
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
 - `oauth_token/__init__.py` serves `/oauth` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Checks that failed: security.static: warning (advisory, not blocking): oauth2_authorization_code.py:8:14: S105 Possible hardcoded password a — repair stalled after 1 cycle(s): the same checks failed identically
 - `oauth_clients/__init__.py` serves `/oauth/clients` — the system shall register OAuth clients with a client id and secret and return the client by id
@@ -41,6 +42,7 @@ per promotion, carrying the work item that caused it.
 Currently on:
 
 - `flag.f_1448`
+- `flag.f_1457`
 - `flag.r_1433`
 - `flag.r_1434`
 - `flag.r_1436`
