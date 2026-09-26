@@ -29,7 +29,7 @@ them and reports which flags are on.
 - `oauth_token/__init__.py` serves `/oauth` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Checks that failed: security.static: warning (advisory, not blocking): oauth2_authorization_code.py:8:14: S105 Possible hardcoded password a — repair stalled after 1 cycle(s): the same checks failed identically
 - `oauth_clients/__init__.py` serves `/oauth/clients` — the system shall register OAuth clients with a client id and secret and return the client by id
 - `users/__init__.py` serves `/users` — the system shall store a user with an email and return the user by id
-- `webhooks/__init__.py` serves `/webhooks` — Expected: Reject with 401 Unauthorized (treat missing owner as auth failure) (Changes the semantics to conflate missing header with authentication failure; may confuse callers about whether the header is required or optional.); Auto-generate if missing; server creates a UUID if caller does not provide one (Every event gets a unique idempotency key regardless. Simplifies the path but loses caller's ability to control dedup; useful if idempotency is internal-only.); Require both X-Signature and a valid secret per owner; reject 403 if missing or invalid (Every POST must be signed. Requires that owners have pre-shared secrets and supply them on every request. Stricter security; more complex for unsigned event sources.); UUID (e.g., 550e8400-e29b-41d4-a716-446655440000) (Standard, URL-safe format. GET /webhooks/{id} path is clean; no URL encoding issues. Aligns with Idempotency-Key format.); Other concerns or clarifications (optional): Describe any other tensions or edge cases you see in the requirement. Currently: Behaviours that did not hold: Scenario: Accept and record webhook requests; Scenario: Accept inbound webhook requests, verify hmac signatures when provided, and record events in the database — repair stalled after 1 cycle(s): the same checks failed identically
+- `webhooks/__init__.py` serves `/webhooks` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Behaviours that did not hold: Scenario: A record that was never created is not found (GET /webhooks/events/{id}); Scenario: Webhook acceptance and storage (the contract describes no operation, field or status for this, so nothing in it says how to reach or observe "Webhook ac); Scenario: Security advisory handling (the contract describes no operation, field or status for this, so nothing in it say
 
 ## Flags
 
@@ -43,6 +43,7 @@ Currently on:
 
 - `flag.f_1448`
 - `flag.f_1457`
+- `flag.f_1467`
 - `flag.r_1433`
 - `flag.r_1434`
 - `flag.r_1436`

@@ -11,7 +11,8 @@ from store import StoreUnavailable, open_store
 from store import counters as store_counters
 import secrets
 import hashlib
-from datetime import datetime, timezone
+from datetime import datetime
+from datetime import timezone
 
 SERVICE_NAME = 'webhooks'
 SERVICE_VERSION = "1.0.0"
