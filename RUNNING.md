@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `notifications_stream/__init__.py` serves `/notifications` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Behaviours that did not hold: Scenario: Stream events to callers as server-sent events at get /notifications/stream with long-lived http connections (contract has no POST /streams; the criterion names an operation the contract doe; Scenario: Another caller may not reach this record (GET /streams/notifications/stream); Scenario: Streaming notifications — repair stalled after 1 cycle(s): the same ch
 - `webhooks/__init__.py` serves `/webhooks` — the system shall accept POST requests to a webhook endpoint, validate HMAC signatures when provided in the request, and reject requests with invalid signatures
 
 ## Flags
@@ -38,3 +39,4 @@ per promotion, carrying the work item that caused it.
 Currently on:
 
 - `flag.r_1521`
+- `flag.r_1526`

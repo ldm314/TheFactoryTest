@@ -2,6 +2,16 @@
   "base_image": "python:3.12-slim",
   "components": [
     {
+      "name": "__future__",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "asyncio",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "datetime",
       "source": "stdlib",
       "version": "3.12"
@@ -32,11 +42,6 @@
       "version": "3.12"
     },
     {
-      "name": "logging",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
       "name": "os",
       "source": "stdlib",
       "version": "3.12"
@@ -57,16 +62,6 @@
       "version": "3.12"
     },
     {
-      "name": "subprocess",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
-      "name": "sys",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
       "name": "threading",
       "source": "stdlib",
       "version": "3.12"
@@ -77,7 +72,7 @@
       "version": "3.12"
     },
     {
-      "name": "urllib",
+      "name": "typing",
       "source": "stdlib",
       "version": "3.12"
     },
@@ -87,6 +82,6 @@
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:65c81dca054df25943384078235e9fdf01f7adb5af208a1d7a89fafb321c9b38",
+  "digest": "sha256:e62cedeb8d4009718175fd5bcee1a88e4e45485c1886518fad9698c127d7d8c9",
   "python": "3.12"
 }
