@@ -17,7 +17,22 @@
       "version": "0.115.6"
     },
     {
+      "name": "hashlib",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "hmac",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "json",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "logging",
       "source": "stdlib",
       "version": "3.12"
     },
@@ -42,6 +57,16 @@
       "version": "3.12"
     },
     {
+      "name": "subprocess",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
+      "name": "sys",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "threading",
       "source": "stdlib",
       "version": "3.12"
@@ -52,11 +77,16 @@
       "version": "3.12"
     },
     {
+      "name": "urllib",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "uvicorn",
       "source": "image",
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:5f68321bd72d511b400d9047e0c0baf6d01719effceab479bbba74e332aeee4f",
+  "digest": "sha256:65c81dca054df25943384078235e9fdf01f7adb5af208a1d7a89fafb321c9b38",
   "python": "3.12"
 }
