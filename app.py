@@ -11,6 +11,7 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from foundation import router as foundation_router
+from notifications_stream import router as notifications_stream_router
 from webhooks import router as webhooks_router
 
 SERVICE_NAME = 'Factory Test Live'
@@ -19,6 +20,7 @@ PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
+    {"service": 'notifications_stream', "base_path": '/notifications', "routes": [('GET', '^/notifications/stream/?$', 'flag.f_1532')]},
     {"service": 'webhooks', "base_path": '/webhooks', "routes": [('POST', '^/webhooks//?$', 'flag.r_1526')]},
 ]
 
@@ -38,6 +40,7 @@ async def application_health():
 # Component routers after /health so a component's own /health does not shadow
 # the application one (W-1313: forums /health won and hid the real surface).
 app.include_router(foundation_router)
+app.include_router(notifications_stream_router)
 app.include_router(webhooks_router)
 
 
