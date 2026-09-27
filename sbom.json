@@ -2,16 +2,6 @@
   "base_image": "python:3.12-slim",
   "components": [
     {
-      "name": "__future__",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
-      "name": "asyncio",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
       "name": "datetime",
       "source": "stdlib",
       "version": "3.12"
@@ -72,16 +62,11 @@
       "version": "3.12"
     },
     {
-      "name": "typing",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
       "name": "uvicorn",
       "source": "image",
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:e62cedeb8d4009718175fd5bcee1a88e4e45485c1886518fad9698c127d7d8c9",
+  "digest": "sha256:fdec7e01080efaf1cd9a16112c970f8487405f2c6b084a33dd705ef8f24ad19c",
   "python": "3.12"
 }
