@@ -1,7 +1,5 @@
-# The application and the database it owns. Generated; not edited by hand.
-#
-# docs/11 §3: one cluster per product area, one schema per service. The schema
-# is created by each component at startup from the files in migrations/.
+# Application + Postgres + Redpanda (Kafka-compatible). Emitted when a
+# component suggests kafka-producer / names a broker in its contract.
 services:
   database:
     image: postgres:16
@@ -15,24 +13,43 @@ services:
       timeout: 3s
       retries: 30
     volumes:
-      # The codebase is disposable and the database is not (docs/11 §1).
       - app-data:/var/lib/postgresql/data
+
+  redpanda:
+    image: redpandadata/redpanda:v24.2.4
+    command:
+      - redpanda
+      - start
+      - --overprovisioned
+      - --smp
+      - "1"
+      - --memory
+      - 512M
+      - --reserve-memory
+      - 0M
+      - --node-id
+      - "0"
+      - --check=false
+      - --kafka-addr
+      - internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr
+      - internal://redpanda:9092,external://127.0.0.1:19092
+    ports:
+      - "${KAFKA_PORT:-19092}:19092"
 
   app:
     build: .
     environment:
       DATABASE_URL: postgresql://app:app@database:5432/app
+      KAFKA_BOOTSTRAP: redpanda:9092
       PORT: "8080"
     ports:
-      # The host port is overridable, because a generated application that
-      # hardcodes one collides with whatever the operator is already running.
-      # Measured: `docker compose up` on a machine with something on 8080
-      # failed with "port is already allocated" and the application never
-      # started. `APP_PORT=9000 docker compose up` works.
       - "${APP_PORT:-8080}:8080"
     depends_on:
       database:
         condition: service_healthy
+      redpanda:
+        condition: service_started
 
 volumes:
   app-data:
