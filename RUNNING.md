@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `domains/__init__.py` serves `/domains` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Behaviours that did not hold: Scenario: Domain Event Recording on Write Success; Scenario: Successful domain write triggers event recording — repair stalled after 5 cycle(s): the same checks failed identically
+- `events_publish/__init__.py` serves `/events` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Behaviours that did not hold: Scenario: Publish accepted events to Kafka (the contract describes no operation, field or status for this, so nothing in it says how to reach or observe "Publish ac); Scenario: Successfully publishes accepted event to Kafka when KAFKA_BOOTSTRAP is configured; Scenario: Does not attempt to publish event when KAFKA_BOOTSTRAP is not configured — repair stalled after 2 cy
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
 - `notifications_stream/__init__.py` serves `/notifications` — Drop current-state narration that is not required behaviour; operator drive: proceed with greenfield defaults Currently: Behaviours that did not hold: Scenario: Stream events to callers as server-sent events at get /notifications/stream with long-lived http connections (contract has no POST /streams; the criterion names an operation the contract doe; Scenario: Another caller may not reach this record (GET /streams/notifications/stream); Scenario: Streaming notifications — repair stalled after 1 cycle(s): the same ch
 - `webhooks/__init__.py` serves `/webhooks` — the system shall accept POST requests to a webhook endpoint, validate HMAC signatures when provided in the request, and reject requests with invalid signatures
@@ -40,5 +41,6 @@ per promotion, carrying the work item that caused it.
 Currently on:
 
 - `flag.f_1532`
+- `flag.f_1533`
 - `flag.r_1521`
 - `flag.r_1526`
