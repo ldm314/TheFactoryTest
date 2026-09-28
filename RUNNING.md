@@ -25,6 +25,7 @@ them and reports which flags are on.
 ## Components
 
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
+- `posts_webhooks/__init__.py` serves `/posts` — Expected: Return 401 Unauthorized — signature validation failed, treat as authentication failure (Invalid signatures are treated as failed authentication. Semantically clear that the caller's proof (signature) is invalid. Aligns with HTTP spec for failed authentication.); Other considerations or additional context:: operator drive: keep the requirement as stated Currently: Behaviours that did not hold: Scenario: Another caller may not reach this record (POST /webhooks) (the contract describes no operation, field or status for this, so nothing in it says how to reach or observe "Another ca); Scenario: Another caller may not reach this record (POST /webhooks) — repair stalled after 1 cycle(s): the same checks failed identically
 - `webhooks/__init__.py` serves `/webhooks` — Make the disputed behaviour an explicit, testable requirement; operator drive: keep the requirement as stated Currently: Behaviours that did not hold: Scenario: Another caller may not reach this record (POST /webhooks); Scenario: Invalid signatures are rejected immediately without processing the payload; Scenario: Valid webhooks are accepted and duplicates within the window are rejected — repair stalled after 2 cycle(s): the same checks failed identically
 
 ## Flags
@@ -37,4 +38,5 @@ per promotion, carrying the work item that caused it.
 
 Currently on:
 
+- `flag.f_1550`
 - `flag.r_1543`
