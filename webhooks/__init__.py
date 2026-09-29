@@ -25,7 +25,7 @@ AMOUNT_ROUNDING = None
 REFERENCES = []
 AUTH_SCHEME = 'plain'
 IDEMPOTENCY_HEADER = ''
-OWNER_HEADER = 'X-Signature-HMAC'
+OWNER_HEADER = 'X-Signature'
 
 store = open_store(SERVICE_NAME, RETENTION_DAYS, RECORD_FIELDS, STORE_ATTEMPTS)
 _IDEMPOTENCY_KEYS = {}
@@ -135,9 +135,9 @@ class Handler:
         return None
 
     def _caller(self) -> str:
-        if not 'X-Signature-HMAC':
+        if not 'X-Signature':
             return ""
-        raw = self.request.headers.get('X-Signature-HMAC', "")
+        raw = self.request.headers.get('X-Signature', "")
         if AUTH_SCHEME == "bearer":
             if not raw.lower().startswith("bearer "):
                 return ""
@@ -146,7 +146,7 @@ class Handler:
         return raw
 
     def _signature_ok(self) -> bool:
-        header_name = 'X-Signature-HMAC'
+        header_name = 'X-Signature'
         if not header_name or "signature" not in header_name.lower():
             return True
         import hashlib
