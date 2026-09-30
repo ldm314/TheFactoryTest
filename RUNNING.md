@@ -24,6 +24,7 @@ them and reports which flags are on.
 
 ## Components
 
+- `domains/__init__.py` serves `/domains` — the system shall stream domain events to callers as Server-Sent Events at GET /notifications/stream and manage subscriber connections
 - `events/__init__.py` serves `/events` — the system shall accept inbound webhooks, verify an HMAC signature when X-Signature is present, store the event, and acknowledge with 201
 - `foundation/__init__.py` serves `/foundation` — the system shall provide a runnable application entry point with a health check and persistence configured for the selected application scaffold
 
@@ -38,3 +39,4 @@ per promotion, carrying the work item that caused it.
 Currently on:
 
 - `flag.r_1568`
+- `flag.r_1569`

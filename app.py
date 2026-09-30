@@ -10,6 +10,7 @@ import flags
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from domains import router as domains_router
 from events import router as events_router
 from foundation import router as foundation_router
 
@@ -18,6 +19,7 @@ SERVICE_VERSION = "1.0.0"
 PORT = int(os.environ.get("PORT", "8080"))
 
 COMPONENTS = [
+    {"service": 'domains', "base_path": '/domains', "routes": [('GET', '^/domains/notifications/stream/?$', 'flag.r_1571'), ('GET', '^/domains/notifications/stream/?$', 'flag.r_1571')]},
     {"service": 'events', "base_path": '/events', "routes": [('POST', '^/events/?$', 'flag.r_1569')]},
     {"service": 'foundation', "base_path": '/foundation', "routes": [('GET', '^/foundation/?$', '')]},
 ]
@@ -37,6 +39,7 @@ async def application_health():
 
 # Component routers after /health so a component's own /health does not shadow
 # the application one (W-1313: forums /health won and hid the real surface).
+app.include_router(domains_router)
 app.include_router(events_router)
 app.include_router(foundation_router)
 
