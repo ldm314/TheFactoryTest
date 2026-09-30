@@ -2,6 +2,11 @@
   "base_image": "python:3.12-slim",
   "components": [
     {
+      "name": "__future__",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "datetime",
       "source": "stdlib",
       "version": "3.12"
@@ -52,11 +57,6 @@
       "version": "3.12"
     },
     {
-      "name": "secrets",
-      "source": "stdlib",
-      "version": "3.12"
-    },
-    {
       "name": "threading",
       "source": "stdlib",
       "version": "3.12"
@@ -67,11 +67,16 @@
       "version": "3.12"
     },
     {
+      "name": "typing",
+      "source": "stdlib",
+      "version": "3.12"
+    },
+    {
       "name": "uvicorn",
       "source": "image",
       "version": "0.32.1"
     }
   ],
-  "digest": "sha256:5aaf48576d5f9c95c294ae4cd23500fe517a73aec26d0ca87eb3d6a4d6b00a03",
+  "digest": "sha256:f903644104326251dadb15a1d3fbbcbf69ca4cbd6cf2ae74025fa8bfa2479260",
   "python": "3.12"
 }
